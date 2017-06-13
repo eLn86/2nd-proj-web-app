@@ -6,6 +6,7 @@ var flash = require('connect-flash');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var lessMiddleware = require('less-middleware');
 
 // Init app
 var app = express();
@@ -15,6 +16,7 @@ mongoose.connect('mongodb://localhost/radiologium');
 
 // Init middel-ware
 app.use(cookieParser());
+app.use(lessMiddleware(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
