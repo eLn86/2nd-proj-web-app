@@ -11,7 +11,7 @@ var session = require('express-session');
 var app = express();
 
 // Connect with Mongo DB
-mongoose.connect('mongodb://localhost/node-template');
+mongoose.connect('mongodb://localhost/radiologium');
 
 // Init middel-ware
 app.use(cookieParser());
@@ -22,8 +22,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // View Engine
-app.set( 'views', path.join(__dirname, 'views'));
-app.set( 'view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
 
 // Setup sessions
 app.use(session( { secret: 'ilovevdi'}));
@@ -39,5 +39,5 @@ require('./routes/routes')(app, passport);
 
 // listen
 app.listen( 3000, function(){
-    console.log('lisning on port 3000');
+    console.log('listening on port 3000');
 });
