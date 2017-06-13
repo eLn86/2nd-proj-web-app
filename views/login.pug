@@ -1,0 +1,23 @@
+extends base/layout
+
+block main
+  .container
+    .row
+      .col-sm-8.col-sm-offset-2
+        h1
+          span.fa.fa-sign-in Login
+    .row
+      .col-sm-8.col-sm-offset-2
+        if (message.length > 0)
+         .alert.alert-danger #{message}
+
+          // LOGIN FORM
+        form(action='/login', method='post')
+          .form-group
+            label Email
+            input.form-control(type='text', name='email')
+          .form-group
+            label Password
+            input.form-control(type='password', name='password')
+          button.btn.btn-info.btn-lg(type='submit') Login
+        hr

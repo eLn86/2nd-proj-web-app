@@ -3,7 +3,7 @@ var localStrategy = require('passport-local').Strategy;
 var facebookStrategy = require('passport-facebook').Strategy;
 var twitterStrategy = require('passport-twitter').Strategy;
 var instagramStrategy = require('passport-instagram').Strategy;
-var socialStrategy = require('passport-social').Strategy;
+var googleStrategy = require('passport-google').Strategy;
 
 // Load validator
 var validator = require('validator');
