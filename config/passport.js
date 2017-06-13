@@ -14,7 +14,7 @@ var User = require('../model/user');
 module.exports = function( passport ) {
 
   // Serialize user
-  passport.serializeUser( function( user, done){
+  passport.serializeUser(function( user, done){
       done(null, user.id);
   });
 
@@ -95,42 +95,42 @@ module.exports = function( passport ) {
         });
     }));
 
-//     // Passport Facebook Login
-//     passport.use('facebook', new facebookStrategy({
-//     clientID: '1461744740550638',
-//     clientSecret: 'c95c58698bf6d0b0a944cd4badbe01e8',
-//     callbackURL: 'http://localhost:3000/auth/facebook/callback',
-//     profileFields: ['name', 'email', 'link', 'locale', 'timezone'],
-//     passReqToCallback: true
-//   },
-//   function(req, accessToken, refreshToken, profile, done){
-//
-//       User.findOne( {'facebook.id' : profile.id }, function(err, user){
-//         if(err){
-//           return done(err);
-//         }
-//
-//         if(!user){
-//
-//           var newUser = new User();
-//           newUser.facebook.id = profile.id;
-//           newUser.facebook.token = accessToken;
-//           newUser.facebook.name = profile.first_name + ' ' +  profile.middle_name + ' ' + profile.last_name;
-//           newUser.facebook.email = profile.email;
-//           newUser.save(function(err){
-//             if(err){
-//               console.log(err);
-//             }
-//             return done(null, newUser, req.flash('loginMessage', 'Logged in successfully'));
-//           });
-//         }
-//
-//         if(user) {
-//             return done(null, user, req.flash('loginMessage', 'Logged in successfully'));
-//         }
-//       });
-//   }
-// ));
+    // Passport Facebook Login
+    passport.use('facebook', new facebookStrategy({
+    clientID: '1461744740550638',
+    clientSecret: 'c95c58698bf6d0b0a944cd4badbe01e8',
+    callbackURL: 'http://localhost:3000/auth/facebook/callback',
+    profileFields: ['name', 'email', 'link', 'locale', 'timezone'],
+    passReqToCallback: true
+  },
+  function(req, accessToken, refreshToken, profile, done){
+
+      User.findOne( {'facebook.id' : profile.id }, function(err, user){
+        if(err){
+          return done(err);
+        }
+
+        if(!user){
+
+          var newUser = new User();
+          newUser.facebook.id = profile.id;
+          newUser.facebook.token = accessToken;
+          newUser.facebook.name = profile.first_name + ' ' +  profile.middle_name + ' ' + profile.last_name;
+          newUser.facebook.email = profile.email;
+          newUser.save(function(err){
+            if(err){
+              console.log(err);
+            }
+            return done(null, newUser, req.flash('loginMessage', 'Logged in successfully'));
+          });
+        }
+
+        if(user) {
+            return done(null, user, req.flash('loginMessage', 'Logged in successfully'));
+        }
+      });
+  }
+));
 //
 //     // Passport Twitter Login
 //     passport.use(new TwitterStrategy({

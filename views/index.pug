@@ -5,7 +5,7 @@ block main
     .omb_login
       h3.omb_authTitle
         | Login or 
-        a(href='#') Sign up
+        a(href='/signup') Sign up
       .row.omb_row-sm-offset-3.omb_socialButtons
         .col-xs-3.col-sm-2
           a.btn.btn-lg.btn-block.omb_btn-facebook(href='#')
@@ -29,7 +29,7 @@ block main
           span.omb_spanOr or
       .row.omb_row-sm-offset-3
         .col-xs-12.col-sm-8
-          form.omb_loginForm(action='', autocomplete='off', method='POST')
+          form.omb_loginForm(action='/', autocomplete='off', method='post')
             .input-group
               span.input-group-addon
                 i.fa.fa-user

@@ -9,32 +9,43 @@ module.exports = function(app, passport){
     res.redirect('/')
   }
 
-  // Sign up
+  // Index
   app.get('/', function(req, res){
     res.render('index', { message: req.flash('loginMessage') });
   });
 
-  // Sign up
-  app.post('/', passport.authenticate('local-signup', {
+  // Index
+  app.post('/', passport.authenticate('local-login', {
     successRedirect : '/secret',
     failureRedirect : '/',
     failureFlash: true
   }));
 
-  // Login
-  app.get('/login', function(req, res){
-    res.render('login', { message: req.flash('loginMessage') });
+  // Sign up
+  app.get('/signup', function(req, res){
+    res.render('signup', { message: req.flash('loginMessage') });
   });
 
-  // Login
-  app.post('/login', passport.authenticate('local-login', {
+  // Sign up
+  app.post('/signup', passport.authenticate('local-signup', {
     successRedirect : '/secret',
-    failureRedirect : '/login',
+    failureRedirect : '/signup',
     failureFlash: true
   }));
 
+  // // Log in
+  // app.get('/login', function(req, res){
+  //   res.render('login', { message: req.flash('loginMessage') });
+  // });
+  //
+  // // Log in
+  // app.post('/login', passport.authenticate('local-login', {
+  //   successRedirect : '/secret',
+  //   failureRedirect : '/login',
+  //   failureFlash: true
+  // }));
+
   // Facebook Login
-  //facebook login
   app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email', 'public_profile'] }));
   app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), (req, res) => {
     res.redirect(req.session.returnTo || '/secret');
