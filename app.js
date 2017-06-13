@@ -38,6 +38,6 @@ require('./config/passport')(passport);
 require('./routes/routes')(app, passport);
 
 // listen
-app.listen( 3000, function(){
+app.listen(3000, function(){
     console.log('listening on port 3000');
 });
