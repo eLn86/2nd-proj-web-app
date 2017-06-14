@@ -47,13 +47,25 @@ module.exports = function(app, passport){
 
   // Facebook Login
   app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email', 'public_profile'] }));
-  app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), (req, res) => {
+  app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/index' }), (req, res) => {
     res.redirect(req.session.returnTo || '/secret');
   });
 
   // Twitter Login
   app.get('/auth/twitter', passport.authenticate('twitter'));
-  app.get('/auth/twitter/callback', passport.authenticate('twitter', { failureRedirect: '/login' }), (req, res) => {
+  app.get('/auth/twitter/callback', passport.authenticate('twitter', { failureRedirect: '/index' }), (req, res) => {
+    res.redirect(req.session.returnTo || '/secret');
+  });
+
+  // Instagram Login
+  app.get('/auth/instagram', passport.authenticate('instagram'));
+  app.get('/auth/instagram/callback', passport.authenticate('instagram', { failureRedirect: '/index' }), (req, res) => {
+    res.redirect(req.session.returnTo || '/secret');
+  });
+
+  // Google Login
+  app.get('/auth/google', passport.authenticate('google'));
+  app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/index' }), (req, res) => {
     res.redirect(req.session.returnTo || '/secret');
   });
 

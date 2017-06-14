@@ -25,48 +25,7 @@ module.exports = function( passport ) {
       });
   });
 
-  // Passport signup
-  passport.use('local-signup', new localStrategy({
-      usernameField : 'email',
-      passwordField : 'password',
-      passReqToCallback: true
-    },
-    function(req, email, password, done){    // function is run because of passReqToCallback:true
-
-        // Check that the email is in the right format
-        if( !validator.isEmail(email) ){
-          return done(null, false, req.flash('loginMessage','That is not a valid email address'));
-        }
-
-        // Check that the password is at least 8 chars
-        if( password.length < 8 ){
-          return done(null, false, req.flash('loginMessage','The password needs to be 8 chars long'));
-        }
-
-        // Asynchronous function to check if email already exists in DB, if not, create and log in new user
-        process.nextTick(function(){
-          User.findOne( {'local.email' : email }, function(err, user){
-            if(err){
-              return done(err);
-            }
-            if(user){
-              return done(null, false, req.flash('loginMessage','That email is already in use'));
-            }else{
-              var newUser = new User();
-              newUser.local.email = email;
-              newUser.local.password = password;
-              newUser.save(function(err){
-                if(err){
-                  console.log(err);
-                }
-                return done(null, newUser, req.flash('loginMessage', 'Logged in successfully'));
-              });
-            }
-          });
-        });
-    }));
-
-  // Passport login
+  // Passport Local Login
   passport.use('local-login', new localStrategy({
       usernameField : 'email',
       passwordField : 'password',
@@ -94,10 +53,52 @@ module.exports = function( passport ) {
         });
     }));
 
+    // Passport Local Sign Up
+    passport.use('local-signup', new localStrategy({
+        usernameField : 'email',
+        passwordField : 'password',
+        passReqToCallback: true
+      },
+      function(req, email, password, done){    // function is run because of passReqToCallback:true
+
+          // Check that the email is in the right format
+          if( !validator.isEmail(email) ){
+            return done(null, false, req.flash('loginMessage','That is not a valid email address'));
+          }
+
+          // Check that the password is at least 8 chars
+          if( password.length < 8 ){
+            return done(null, false, req.flash('loginMessage','The password needs to be 8 chars long'));
+          }
+
+          // Asynchronous function to check if email already exists in DB, if not, create and log in new user
+          process.nextTick(function(){
+            User.findOne( {'local.email' : email }, function(err, user){
+              if(err){
+                return done(err);
+              }
+              if(user){
+                return done(null, false, req.flash('loginMessage','That email is already in use'));
+              }else{
+                var newUser = new User();
+                newUser.local.email = email;
+                newUser.local.password = password;
+                newUser.save(function(err){
+                  if(err){
+                    console.log(err);
+                  }
+                  return done(null, newUser, req.flash('loginMessage', 'Logged in successfully'));
+                });
+              }
+            });
+          });
+      }));
+
+
     // Passport Facebook Login
     passport.use('facebook', new facebookStrategy({
-    clientID: '1461744740550638',
-    clientSecret: 'c95c58698bf6d0b0a944cd4badbe01e8',
+    clientID: '1365164210217390',
+    clientSecret: '5a9e8222bede9af16ede071e266aaa81',
     callbackURL: 'http://localhost:3000/auth/facebook/callback',
     profileFields: ['name', 'email', 'link', 'locale', 'timezone'],
     passReqToCallback: true
@@ -130,40 +131,42 @@ module.exports = function( passport ) {
       });
   }
 ));
-//
-//     // Passport Twitter Login
-//     passport.use(new TwitterStrategy({
-//     consumerKey: 'RQXS1CkbL6eQ04iJYLVnw2EJf',
-//     consumerSecret: 'kgwYOYolYd0sF7VqHUotVFcqbJlMFaRhiuaYVVgcPRvycO5IFp',
-//     callbackURL: "http://127.0.0.1:3000/auth/twitter/callback",
-//     passReqToCallback: true
-//   },
-//     function(req, token, tokenSecret, profile, done){
-//       User.findOne( {'twitter.id' : profile.id }, function(err, user){
-//         if(err){
-//           return done(err);
-//         }
-//
-//         if(!user){
-//
-//           var newUser = new User();
-//           newUser.twitter.id = profile.id;
-//           newUser.twitter.token = token;
-//           newUser.twitter.name = profile.first_name + ' ' +  profile.middle_name + ' ' + profile.last_name;
-//           newUser.twitter.email = profile.email;
-//           newUser.save(function(err){
-//             if(err){
-//               console.log(err);
-//             }
-//             return done(null, newUser, req.flash('loginMessage', 'Logged in successfully'));
-//           });
-//         }
-//
-//         if(user) {
-//             return done(null, user, req.flash('loginMessage', 'Logged in successfully'));
-//         }
-//       });
-//     }
-// ));
+
+    // Passport Twitter Login
+    passport.use(new twitterStrategy({
+    consumerKey: 'RQXS1CkbL6eQ04iJYLVnw2EJf',
+    consumerSecret: 'kgwYOYolYd0sF7VqHUotVFcqbJlMFaRhiuaYVVgcPRvycO5IFp',
+    callbackURL: "https://localtest.me:3000/auth/twitter/callback",
+    passReqToCallback: true
+  },
+    function(req, token, tokenSecret, profile, done){
+      console.log(token);
+      console.log(tokenSecret);
+      User.findOne( {'twitter.id' : profile.id }, function(err, user){
+        if(err){
+          console.log(err);
+          return done(err);
+        }
+
+        if(!user){
+          var newUser = new User();
+          newUser.twitter.id = profile.id;
+          newUser.twitter.token = token;
+          newUser.twitter.name = profile.first_name + ' ' +  profile.middle_name + ' ' + profile.last_name;
+          newUser.twitter.email = profile.email;
+          newUser.save(function(err){
+            if(err){
+              console.log(err);
+            }
+            return done(null, newUser, req.flash('loginMessage', 'Logged in successfully'));
+          });
+        }
+
+        if(user) {
+            return done(null, user, req.flash('loginMessage', 'Logged in successfully'));
+        }
+      });
+    }
+));
 
 };
