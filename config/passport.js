@@ -78,7 +78,6 @@ module.exports = function( passport ) {
             if(err){
               return done(err);
             }
-
             if(!user){
               return done(null,false, req.flash('loginMessage', 'sorry no one by that email'));
             }
