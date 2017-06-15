@@ -8,11 +8,22 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var lessMiddleware = require('less-middleware');
 
+
+//lets require/import the mongodb native drivers.
+var mongodb = require('mongodb');
+var url = 'mongodb://heroku_93x4lhsr:almt75pm8it83jc5dvbbn4tpk3@ds127842.mlab.com:27842/heroku_93x4lhsr';
+
 // Init app
 var app = express();
 
 // Connect with Mongo DB
-mongoose.connect('mongodb://localhost/radiologium' || process.env.MONGOLAB_URI || process.env.MONGODB_URI);
+mongoose.connect('mongodb://localhost/radiologium' || url || process.env.MONGODB_URI, function(err,db) {
+  if (err) {
+    console.log('Unable to connect to the mongoDB server. Error:', err);
+  } else {
+    console.log('Connection established to', url);
+  }
+});
 
 // Init middel-ware
 app.use(cookieParser());
