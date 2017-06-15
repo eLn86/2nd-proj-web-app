@@ -12,7 +12,7 @@ var lessMiddleware = require('less-middleware');
 var app = express();
 
 // Connect with Mongo DB
-mongoose.connect('mongodb://localhost/radiologium' || process.env.MONGOLAB_URI);
+mongoose.connect('mongodb://localhost/radiologium' || process.env.MONGOLAB_URI || process.env.MONGODB_URI);
 
 // Init middel-ware
 app.use(cookieParser());
