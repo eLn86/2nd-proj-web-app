@@ -17,7 +17,7 @@ var url = 'mongodb://heroku_93x4lhsr:almt75pm8it83jc5dvbbn4tpk3@ds127842.mlab.co
 var app = express();
 
 // Connect with Mongo DB
-mongoose.connect('mongodb://localhost/radiologium' || url || process.env.MONGODB_URI, function(err,db) {
+mongoose.connect('mongodb://localhost/radiologium' || process.env.MONGODB_URI, function(err,db) {
   if (err) {
     console.log('Unable to connect to the mongoDB server. Error:', err);
   } else {
