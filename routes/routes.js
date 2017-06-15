@@ -64,7 +64,7 @@ module.exports = function(app, passport){
   });
 
   // Google Login
-  app.get('/auth/google', passport.authenticate('google'));
+  app.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }));
   app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/index' }), (req, res) => {
     res.redirect(req.session.returnTo || '/secret');
   });

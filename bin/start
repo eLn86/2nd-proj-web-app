@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /* eslint strict: 0 */
-
+// const fs = require('fs');
 'use strict';
 
 /**
@@ -11,9 +11,23 @@
 require('babel-core/register');
 require('babel-polyfill');
 
+// Keys
+// const key = fs.readFileSync('./keys/2nd-proj-web-app-key.pem');
+// const cert = fs.readFileSync('./keys/2nd-proj-web-app-cert.pem');
+//
+// const option = {
+//   key: key,
+//   cert: cert
+// };
+
+/**
+ * Create HTTPS server.
+ */
 const app = require('../app').default;
-const debug = require('debug')('2nd-proj-web-app:server');
 const http = require('http');
+const server = http.Server(app);
+const debug = require('debug')('2nd-proj-web-app:server');
+
 
 /**
  * Normalize a port into a number, string, or false.
@@ -38,20 +52,12 @@ const normalizePort = function(val) {
 /**
  * Get port from environment and store in Express.
  */
-
 const port = normalizePort(process.env.PORT || '3000');
-app.set('port', port);
 
-/**
- * Create HTTP server.
- */
-
-const server = http.createServer(app);
 
 /**
  * Listen on provided port, on all network interfaces.
  */
-
 server.listen(port);
 
 /**
@@ -83,7 +89,7 @@ server.on('error', (error) => {
 });
 
 /**
- * Event listener for HTTP server "listening" event.
+ * Event listener for HTTPS server "listening" event.
  */
 
 server.on('listening', () => {
