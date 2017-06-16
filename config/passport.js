@@ -11,10 +11,10 @@ var validator = require('validator');
 // Load user model
 var User = require('../model/user');
 
-module.exports = function( passport ) {
+module.exports = function(passport) {
 
   // Serialize user
-  passport.serializeUser(function( user, done){
+  passport.serializeUser(function(user, done){
       done(null, user.id);
   });
 
@@ -99,7 +99,7 @@ module.exports = function( passport ) {
     passport.use('facebook', new facebookStrategy({
     clientID: '1365164210217390',
     clientSecret: '5a9e8222bede9af16ede071e266aaa81',
-    callbackURL: FACEBOOK_CALLBACKURL,
+    callbackURL: 'http://localhost:3000/auth/facebook/callback',
     profileFields: ['name', 'email', 'link', 'locale', 'timezone'],
     passReqToCallback: true
   },
@@ -136,7 +136,7 @@ module.exports = function( passport ) {
     passport.use(new twitterStrategy({
     consumerKey: 'RQXS1CkbL6eQ04iJYLVnw2EJf',
     consumerSecret: 'kgwYOYolYd0sF7VqHUotVFcqbJlMFaRhiuaYVVgcPRvycO5IFp',
-    callbackURL: "http://localtest.me:3000/auth/twitter/callback",
+    callbackURL: "http://localhost:3000/auth/twitter/callback",
     passReqToCallback: true
   },
     function(req, token, tokenSecret, profile, done){
@@ -170,7 +170,7 @@ module.exports = function( passport ) {
       passport.use(new instagramStrategy({
       clientID: '2c073b80f10b434189a155512d661630',
       clientSecret: 'fc5c82287f3243bcafefe6e67530610a',
-      callbackURL: "http://localtest.me:3000/auth/instagram/callback",
+      callbackURL: "http://localhost:3000/auth/instagram/callback",
       passReqToCallback: true
       },
       function(req, accessToken, refreshToken, profile, done) {
@@ -205,7 +205,7 @@ module.exports = function( passport ) {
         passport.use(new googleStrategy({
         clientID: '425387065267-sg9kbsssmlihs1lekjscpc21p6gcf866.apps.googleusercontent.com',
         clientSecret: 'o8ByebzHC4LVVrJL1MdYwn4z',
-        callbackURL: "http://localtest.me:3000/auth/google/callback",
+        callbackURL: "http://localhost:3000/auth/google/callback",
         passReqToCallback: true
         },
         function(req, accessToken, refreshToken, profile, done) {
