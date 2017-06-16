@@ -28,7 +28,6 @@ mongoose.connect(process.env.MONGODB_URI || url, function(err,db) {
 });
 
 // Init middel-ware
-app.use(cookieParser());
 app.use(lessMiddleware(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -42,7 +41,19 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 // Setup sessions
-app.use(session( { secret: 'ilovevdi'}));
+app.use(cookieParser(process.env.SESSION_SECRET));
+app.use(session({
+ secret: process.env.SESSION_SECRET,
+ cookie: { maxAge: 3600000 },
+ resave: false,
+ saveUninitialized: true,
+ store: new MongoStore({
+   url: process.env.MONGODB_URI,
+   autoReconnect: true
+ })
+}));
+
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
