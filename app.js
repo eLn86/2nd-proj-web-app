@@ -10,7 +10,7 @@ var lessMiddleware = require('less-middleware');
 
 
 //lets require/import the mongodb native drivers.
-var mongodb = require('mongodb');
+// var mongodb = require('mongodb');
 var url = 'mongodb://admin:Misysia1@ds127842.mlab.com:27842/heroku_93x4lhsr';
 
 // Init app
