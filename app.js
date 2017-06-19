@@ -61,7 +61,7 @@ app.get('/', function(req, res) {
 })
 
 app.use('/', require('./routes/index'));
-app.use('/secret', require('./routes/users'))
+app.use('/secret', require('./routes/users'));
 
 // listen
 const port = 3000;
