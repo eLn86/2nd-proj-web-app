@@ -14,6 +14,12 @@ block main
           // SIGNUP FORM
         form(action='/signup', method='post')
           .form-group
+            label First Name
+            input.form-control(type='text', name='firstName')
+          .form-group
+            label Last Name
+            input.form-control(type='text', name='lastName')
+          .form-group
             label Email
             input.form-control(type='text', name='email')
           .form-group

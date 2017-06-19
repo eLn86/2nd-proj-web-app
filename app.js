@@ -1,5 +1,6 @@
 require('dotenv').config({silent: true});
 var express = require('express');
+var Debug = require('debug');
 var path = require('path');
 var mongoose = require('mongoose');
 var passport = require('passport');
@@ -8,7 +9,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var lessMiddleware = require('less-middleware');
-// var MongoStore = require('connect-mongo')(session);
+var MongoStore = require('connect-mongo')(session);
 
 
 //lets require/import the mongodb native drivers.
@@ -16,17 +17,26 @@ var mongodb = require('mongodb');
 var url = 'mongodb://admin:Misysia1@ds127842.mlab.com:27842/heroku_93x4lhsr';
 
 // Init app
-var app = express();
+const app = express();
+const debug = Debug('2nd-proj-web-app:app');
 
 // Connect with Mongo DB
 mongoose.connect('mongodb://localhost/radiologium', function(err,db) {
   if (err) {
     console.log('Unable to connect to the mongoDB server. Error:', err);
   } else {
-    console.log('Connection established to', process.env.MONGODB_URI);
+    console.log('Connection established to', url);
   }
 });
-mongoose.Promise = global.Promise;
+
+// mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/radiologium', function(err,db) {
+//   if (err) {
+//     console.log('Unable to connect to the mongoDB server. Error:', err);
+//   } else {
+//     console.log('Connection established to', process.env.MONGODB_URI);
+//   }
+// });
+// mongoose.Promise = global.Promise;
 
 // Setup sessions
 // app.use(cookieParser(process.env.SESSION_SECRET));

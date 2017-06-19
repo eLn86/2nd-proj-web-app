@@ -6,7 +6,7 @@ module.exports = function(app, passport){
     if(req.isAuthenticated()) {
       return next();
     }
-    res.redirect('/')
+     res.redirect('/');
   }
 
   // Index
@@ -45,7 +45,7 @@ module.exports = function(app, passport){
   //   failureFlash: true
   // }));
 
-  // Facebook Login
+  // Facebook Login, get scope from facebook user
   app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email', 'public_profile'] }));
   app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/index' }), (req, res) => {
     res.redirect(req.session.returnTo || '/secret');

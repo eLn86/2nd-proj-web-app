@@ -10,6 +10,8 @@ var validator = require('validator');
 
 // Load user model
 var User = require('../model/user');
+var Track = require('../model/tracks');
+var trackNode = require('../model/nodes'); 
 
 module.exports = function(passport) {
 
@@ -60,7 +62,6 @@ module.exports = function(passport) {
         passReqToCallback: true
       },
       function(req, email, password, done){    // function is run because of passReqToCallback:true
-
           // Check that the email is in the right format
           if( !validator.isEmail(email) ){
             return done(null, false, req.flash('loginMessage','That is not a valid email address'));
@@ -80,43 +81,68 @@ module.exports = function(passport) {
               if(user){
                 return done(null, false, req.flash('loginMessage','That email is already in use'));
               }else{
+                
+                // var essentialsTrack = new Track();
+                // essentialsTrack.track.id = 1;
+                // essentialsTrack.track.name = 'Chest X-Ray Essentials';
+                // essentialsTrack.track.overView = 'The Chest X-ray Essentials track is a quintessential in-depth review of X-ray radiological anatomy.';
+                // essentialsTrack.track.price = 25;
+                // 
+                // // Save track in database
+                // essentialsTrack.save(function(err){
+                //   if(err){
+                //     console.log(err);
+                //   }
+                //   return done(null, essentialsTrack);
+                // });
+                
                 var newUser = new User();
+                newUser.local.firstName = req.body.firstName;
+                newUser.local.lastName = req.body.lastName;
                 newUser.local.email = email;
                 newUser.local.password = password;
+                newUser.local.track = [];
+                newUser.local.photo = '../public/images/default-photo.gif';
+
+                // Save user in database
                 newUser.save(function(err){
                   if(err){
                     console.log(err);
                   }
                   return done(null, newUser, req.flash('loginMessage', 'Logged in successfully'));
-                });
+                });  
               }
-            });
-          });
+            });  
+          });  
       }));
 
 
     // Passport Facebook Login
     passport.use('facebook', new facebookStrategy({
-    clientID: '1365164210217390',
-    clientSecret: '5a9e8222bede9af16ede071e266aaa81',
+    clientID: '1900129696892874',
+    clientSecret: '91612faf0b9471d576917d2a6d74579a',
     callbackURL: 'http://localhost:3000/auth/facebook/callback',
-    profileFields: ['name', 'email', 'link', 'locale', 'timezone'],
+    profileFields: ['id', 'displayName', 'name', 'gender', 'picture.type(large)', 'email'],
     passReqToCallback: true
   },
   function(req, accessToken, refreshToken, profile, done){
-
+      
+      // function to find a user in the database using facebook id
       User.findOne( {'facebook.id' : profile.id }, function(err, user){
         if(err){
           return done(err);
         }
-
+        
+        // if user is not found, create in database
         if(!user){
-
           var newUser = new User();
           newUser.facebook.id = profile.id;
           newUser.facebook.token = accessToken;
-          newUser.facebook.name = profile.first_name + ' ' +  profile.middle_name + ' ' + profile.last_name;
           newUser.facebook.email = profile.email;
+          newUser.facebook.givenName = profile.displayName;
+          newUser.facebook.photo = profile.photos ? profile.photos[0].value : '/images/profile-testimg.jpg';
+
+          // save into database
           newUser.save(function(err){
             if(err){
               console.log(err);

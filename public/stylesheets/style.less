@@ -103,8 +103,8 @@ a {
 }
 
 .navbar-brand{
-  width: 50px;
-  height: 50px;
+  width: 100px;
+  height: 100px;
   padding: 5px;
 }
 
@@ -113,11 +113,15 @@ a {
   background-color: white;
 }
 
-.activeElement:hover {
+.dashboardElement, .tracksElement, .reportElement {
+  margin-top: 20px;
+}
+
+.dashboardElement:hover, .tracksElement:hover, .reportElement:hover {
   border-bottom: 3px solid black;
 }
 
-.activeElement a:hover {
+.dashboardElementElement a:hover {
   color: black;
 }
 
@@ -132,10 +136,22 @@ a {
 }
 
 .profile-pic {
-  width: 30px;
-  height: 30px;
+  width: 50px;
+  height: 50px;
 }
 
 .row {
   padding: 0;
+}
+
+.waves-effect, .waves-light {
+  color: black;
+}
+
+.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:focus, .navbar-inverse .navbar-nav>.open>a:hover {
+  background-color: white;
+}
+
+ul.nav.navbar-nav.navbar-right {
+  margin-top: 20px;
 }

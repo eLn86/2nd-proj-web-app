@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var bcrypt   = require('bcrypt-nodejs');
+var tracks = require('./tracks');
 
 // define the schema for user
 var userSchema = mongoose.Schema({
@@ -7,18 +8,24 @@ var userSchema = mongoose.Schema({
     local            : {
         email        : String,
         password     : String,
+        firstName    : String,
+        lastName     : String,
+        photo        : String,
+        tracks       : []
     },
     facebook         : {
         id           : String,
         token        : String,
         email        : String,
-        name         : String
+        givenName    : String,
+        photo        : String
     },
     twitter          : {
         id           : String,
         token        : String,
         displayName  : String,
-        username     : String
+        username     : String,
+        photo        : String
     },
     instagram        : {
         id           : String,
@@ -34,6 +41,9 @@ var userSchema = mongoose.Schema({
     }
 
 });
+
+// add tracks to local
+// userSchema.add({ tracks: [tracks.Schema]});
 
 // methods ======================
 
@@ -62,5 +72,8 @@ userSchema.methods.validPassword = function (candidatePassword, cb) {
   });
 };
 
-// create the model for users and expose it to our app
-module.exports = mongoose.model('User', userSchema);
+// create the model for users
+const User = mongoose.model('User', userSchema);
+
+// Export User for shared access 
+module.exports = User;
