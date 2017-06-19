@@ -12,33 +12,33 @@ let homeController = {
   signup: (req, res) => {
     if(!req.body.firstName) {
       req.flash('firstNameError', {
-        type: warning,
+        type: 'warning',
         message: "Please fill in your first name"
       })
-      res.render('/signup', {flash: req.flash('firstNameError')});
+      res.render('signup', {flash: req.flash('firstNameError')});
     }
     else if(!req.body.lastName) {
       req.flash('lastNameError', {
-        type: warning,
+        type: 'warning',
         message: "Please fill in your last name"
       })
-      res.render('/signup', {flash: req.flash('lastNameError')});
+      res.render('signup', {flash: req.flash('lastNameError')});
     }
 
     else if(!req.body.email) {
       req.flash('emailError', {
-        type: warning,
+        type: 'warning',
         message: "Please fill in your email"
       })
-      res.render('/signup', {flash: req.flash('emailError')});
+      res.render('signup', {flash: req.flash('emailError')});
     }
 
     else if(!req.body.password) {
       req.flash('passwordError', {
-        type: warning,
+        type: 'warning',
         message: "Please fill in your password"
       })
-      res.render('/signup', {flash: req.flash('passwordError')});
+      res.render('signup', {flash: req.flash('passwordError')});
     }
     else {
        var userSignUpStrategy = passport.authenticate('local-signup', {
@@ -53,7 +53,7 @@ let homeController = {
   login: (req, res) => {
   if(!req.body.email) {
     req.flash('emailError', {
-      type: warning,
+      type: 'warning',
       message: "Please fill in your email"
     })
     res.render('/', {flash: req.flash('emailError')});
@@ -61,7 +61,7 @@ let homeController = {
 
   else if(!req.body.password) {
     req.flash('passwordError', {
-      type: warning,
+      type: 'warning',
       message: "Please fill in your password"
     })
     res.render('/', {flash: req.flash('passwordError')});
