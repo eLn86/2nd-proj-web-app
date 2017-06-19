@@ -10,46 +10,27 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var lessMiddleware = require('less-middleware');
 var MongoStore = require('connect-mongo')(session);
+var index = require('./routes/index');
+var users = require('./routes/users');
 
 
 //lets require/import the mongodb native drivers.
 var mongodb = require('mongodb');
-var url = 'mongodb://admin:Misysia1@ds127842.mlab.com:27842/heroku_93x4lhsr';
+// var url = 'mongodb://admin:Misysia1@ds127842.mlab.com:27842/heroku_93x4lhsr';
+var localMongoURL = 'mongodb://localhost/radiologium';
 
 // Init app
 const app = express();
 const debug = Debug('2nd-proj-web-app:app');
 
 // Connect with Mongo DB
-mongoose.connect('mongodb://localhost/radiologium', function(err,db) {
+mongoose.connect(localMongoURL, function(err,db) {
   if (err) {
     console.log('Unable to connect to the mongoDB server. Error:', err);
   } else {
-    console.log('Connection established to', url);
+    console.log('Connection established to', localMongoURL);
   }
 });
-
-// mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/radiologium', function(err,db) {
-//   if (err) {
-//     console.log('Unable to connect to the mongoDB server. Error:', err);
-//   } else {
-//     console.log('Connection established to', process.env.MONGODB_URI);
-//   }
-// });
-// mongoose.Promise = global.Promise;
-
-// Setup sessions
-// app.use(cookieParser(process.env.SESSION_SECRET));
-// app.use(session({
-//  secret: process.env.SESSION_SECRET,
-//  cookie: { maxAge: 3600000 },
-//  resave: false,
-//  saveUninitialized: true,
-//  store: new MongoStore({
-//    url: process.env.MONGODB_URI,
-//    autoReconnect: true
-//  })
-// }));
 
 // Init middel-ware
 app.use(cookieParser());
@@ -60,26 +41,30 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Serve static files
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Setup Sessions
+app.use(session({secret: 'iloveui'}));
+app.use(passport.initialize());
+app.use(passport.session());
+// Setup local strategy
+require('./config/passport')(passport);
+
+// Flash
+app.use(flash());
+
 // View Engine
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-// Setup Sessions
-app.use(session({secret: 'iloveui'}));
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(flash());
+app.get('/', function(req, res) {
+  res.render('index');
+})
 
-// Setup local-strategy
-require('./config/passport')(passport);
-
-// Routes
-require('./routes/routes')(app, passport);
+app.use('/', require('./routes/index'));
+app.use('/secret', require('./routes/users'))
 
 // listen
-app.listen(3000, function(){
-    console.log('listening on port 3000');
+const port = 3000;
+app.listen(port, function(){
+    console.log('Radiologium running on port ' + port);
 });
-
-module.exports = app;
