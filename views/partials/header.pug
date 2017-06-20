@@ -1,0 +1,53 @@
+nav.navbar.navbar-inverse
+  .container-fluid
+    // Brand and toggle get grouped for better mobile display
+    .navbar-header
+      button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1', aria-expanded='false')
+        span.sr-only Toggle navigation
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
+      img.navbar-brand(src='/images/logo.png')
+    // Collect the nav links, forms, and other content for toggling
+    .main-navbar
+      ul.nav.navbar-nav
+        li.dashboardElement
+          a(href='#' style='color:black')
+            | Dashboard 
+        li.tracksElement
+          a(href='#' style='color:black') Tracks
+        li.dropdown.reportElement
+          a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false' style='color:black')
+            | Reports 
+          ul.dropdown-menu
+            li
+              a(href='#') Tracks Covered
+            li
+              a(href='#') Progress Report
+            li
+              a(href='#') Performance Report
+            li
+              a(href='#') Activity Report
+      //- form.navbar-form.navbar-left
+      //-   .form-group
+      //-     input.form-control(type='text', placeholder='Search Tracks')
+      //-   button.btn.btn-default(type='submit') Submit
+      ul.nav.navbar-nav.navbar-right
+        li
+          h1=userName
+        li
+          a(href='#') Link
+        li.dropdown
+          a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
+            img.profile-pic(src='') 
+            span.caret
+          ul.dropdown-menu
+            li
+              a(href='#') Profile
+            li
+              a(href='#') Change Password
+            li
+              a(href='#') Billing
+            li.divider(role='separator')
+            li
+              a(href='/secret/logout') Logout

@@ -1,66 +1,24 @@
+let User = require('../model/user');
+const passport = require('passport');
+
+let userController = {
+  renderLogin: (req,res) => {
+    User.find({}, (err, photo) => {
+      if(err) throw err;
+      res.render('secret', {photo: photo, message: req.flash('loginMessage')});
+    })
+
+  }
+};
+
+module.exports = userController;
+
 // function isLoggedIn(req, res, next) {
 //   if(req.isAuthenticated()) {
 //     return next();
 //   }
 //    res.redirect('/');
 // }
-
-// Index
-// app.get('/', function(req, res){
-//   res.render('index', { message: req.flash('loginMessage') });
-// });
-
-// Index
-// app.post('/', passport.authenticate('local-login', {
-//   successRedirect : '/secret',
-//   failureRedirect : '/',
-//   failureFlash: true
-// }));
-
-// Sign up
-// app.get('/signup', function(req, res){
-//   res.render('signup', { message: req.flash('loginMessage') });
-// });
-
-// Sign up
-// app.post('/signup', passport.authenticate('local-signup', {
-//   successRedirect : '/secret',
-//   failureRedirect : '/signup',
-//   failureFlash: true
-// }));
-
-// Facebook Login, get scope from facebook user
-// app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email', 'public_profile'] }));
-// app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/index' }), (req, res) => {
-//   res.redirect(req.session.returnTo || '/secret');
-// });
-
-// Twitter Login
-// app.get('/auth/twitter', passport.authenticate('twitter'));
-// app.get('/auth/twitter/callback', passport.authenticate('twitter', { failureRedirect: '/index' }), (req, res) => {
-//   res.redirect(req.session.returnTo || '/secret');
-// });
-
-// Instagram Login
-// app.get('/auth/instagram', passport.authenticate('instagram'));
-// app.get('/auth/instagram/callback', passport.authenticate('instagram', { failureRedirect: '/index' }), (req, res) => {
-//   res.redirect(req.session.returnTo || '/secret');
-// });
-
-// Google Login
-// app.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }));
-// app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/index' }), (req, res) => {
-//   res.redirect(req.session.returnTo || '/secret');
-// });
-
-// Local log in
-// app.get('/secret', isLoggedIn, function(req, res){
-//   res.render('secret', {
-//     message: req.flash('loginMessage'),
-//     userName: req.user.firstName
-// });
-
-// });
 
 // logout
 // app.get('/logout', function(req, res){

@@ -9,9 +9,6 @@ let homeController = {
   renderSignup: (req,res) => {
     res.render('signup', {message: req.flash('loginMessage')});
   },
-  renderLogin: (req,res) => {
-    res.render('secret', {message: req.flash('loginMessage')});
-  },
   signup: (req, res, done) => {
     if(!req.body.firstName) {
       req.flash('firstNameError', {
@@ -50,9 +47,8 @@ let homeController = {
         failureFlash: true
       });
       return userSignUpStrategy(req, res, done);
-    }  
+    }
   },
-
   login: (req, res, done) => {
     if(!req.body.email) {
       req.flash('emailError', {
@@ -61,7 +57,6 @@ let homeController = {
       })
     res.render('/', {flash: req.flash('emailError')});
     }
-
     else if(!req.body.password) {
       req.flash('passwordError', {
         type: 'warning',
@@ -77,6 +72,12 @@ let homeController = {
     });
       return userLoginStrategy(req, res, done);
     }
+  },
+  logout: (req, res) => {
+    req.session.destroy(function (err) {
+      if (err) throw err
+      res.redirect('/')
+    })
   }
 };
 module.exports = homeController;

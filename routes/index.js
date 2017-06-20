@@ -23,13 +23,13 @@ router.get('/auth/instagram', passport.authenticate('instagram'));
 router.get('/auth/instagram/callback', passport.authenticate('instagram', { failureRedirect: '/index' }), (req, res) => {
           res.redirect(req.session.returnTo || '/secret');
         });
-        
+
 // Google Login
 router.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }));
 router.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/index' }), (req, res) => {
           res.redirect(req.session.returnTo || '/secret');
         });
-        
+
 router.get('/signup', homeController.renderSignup);
 router.post('/signup', homeController.signup);
 module.exports = router;
