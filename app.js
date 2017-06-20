@@ -60,8 +60,8 @@ app.get('/', function(req, res) {
   res.render('index');
 })
 
-app.use('/', require('./routes/index'));
-app.use('/secret', require('./routes/users'));
+app.use('/', index);
+app.use('/secret', users);
 
 // listen
 const port = 3000;

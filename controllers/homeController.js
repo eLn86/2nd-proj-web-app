@@ -9,7 +9,10 @@ let homeController = {
   renderSignup: (req,res) => {
     res.render('signup', {message: req.flash('loginMessage')});
   },
-  signup: (req, res) => {
+  renderLogin: (req,res) => {
+    res.render('secret', {message: req.flash('loginMessage')});
+  },
+  signup: (req, res, done) => {
     if(!req.body.firstName) {
       req.flash('firstNameError', {
         type: 'warning',
@@ -50,31 +53,30 @@ let homeController = {
     }  
   },
 
-  login: (req, res) => {
-  if(!req.body.email) {
-    req.flash('emailError', {
-      type: 'warning',
-      message: "Please fill in your email"
-    })
+  login: (req, res, done) => {
+    if(!req.body.email) {
+      req.flash('emailError', {
+        type: 'warning',
+        message: "Please fill in your email"
+      })
     res.render('/', {flash: req.flash('emailError')});
-  }
+    }
 
-  else if(!req.body.password) {
-    req.flash('passwordError', {
-      type: 'warning',
-      message: "Please fill in your password"
-    })
-    res.render('/', {flash: req.flash('passwordError')});
+    else if(!req.body.password) {
+      req.flash('passwordError', {
+        type: 'warning',
+        message: "Please fill in your password"
+      })
+      res.render('/', {flash: req.flash('passwordError')});
+    }
+    else {
+      var userLoginStrategy = passport.authenticate('local-login', {
+        successRedirect : '/secret',
+        failureRedirect : '/',
+        failureFlash: true
+    });
+      return userLoginStrategy(req, res, done);
+    }
   }
-  else {
-    var userLoginStrategy = passport.authenticate('local-login', {
-     successRedirect : '/secret',
-     failureRedirect : '/',
-     failureFlash: true
-   });
-   return userLoginStrategy(req, res, done);
-  }
-}
-  
 };
 module.exports = homeController;
