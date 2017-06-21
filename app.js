@@ -4,10 +4,11 @@ var Debug = require('debug');
 var path = require('path');
 var mongoose = require('mongoose');
 var passport = require('passport');
-var flash = require('connect-flash');
+var flash = require('express-flash');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var expressValidator = require('express-validator');
 var lessMiddleware = require('less-middleware');
 var MongoStore = require('connect-mongo')(session);
 var index = require('./routes/index');
@@ -37,6 +38,7 @@ app.use(cookieParser());
 app.use(lessMiddleware(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(expressValidator());
 
 // Serve static files
 app.use(express.static(path.join(__dirname, 'public')));

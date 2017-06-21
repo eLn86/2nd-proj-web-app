@@ -32,6 +32,7 @@ router.get('/auth/google/callback', passport.authenticate('google', { failureRed
 
 router.get('/signup', homeController.renderSignup);
 router.post('/signup', homeController.signup);
+
 module.exports = router;
 
 // /* GET home page. */

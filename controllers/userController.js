@@ -3,11 +3,17 @@ const passport = require('passport');
 
 let userController = {
   renderLogin: (req,res) => {
-    User.find({}, (err, photo) => {
-      if(err) throw err;
-      res.render('secret', {photo: photo, message: req.flash('loginMessage')});
-    })
+    if(!req.user) {
+      return res.redirect('/');
+    }
 
+    var userName = req.user.getName();
+    var userPhoto = req.user.getPhoto();
+      res.render('secret', {
+        title: 'Welcome to Radiologium',
+        name: userName,
+        photo: userPhoto
+      });
   }
 };
 

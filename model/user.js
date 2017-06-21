@@ -8,8 +8,7 @@ var userSchema = mongoose.Schema({
     local            : {
         email        : String,
         password     : String,
-        firstName    : String,
-        lastName     : String,
+        name         : String,
         photo        : String,
         tracks       : []
     },
@@ -17,33 +16,33 @@ var userSchema = mongoose.Schema({
         id           : String,
         token        : String,
         email        : String,
-        givenName    : String,
+        name         : String,
         photo        : String
     },
     twitter          : {
         id           : String,
         token        : String,
-        displayName  : String,
-        username     : String,
+        email        : String,
+        name         : String,
         photo        : String
     },
     instagram        : {
         id           : String,
         token        : String,
         email        : String,
-        name         : String
+        name         : String,
+        photo        : String
     },
     google           : {
         id           : String,
         token        : String,
         email        : String,
-        name         : String
+        name         : String,
+        photo        : String
     }
 
 });
 
-// add tracks to local
-// userSchema.add({ tracks: [tracks.Schema]});
 
 // methods ======================
 
@@ -72,8 +71,61 @@ userSchema.methods.validPassword = function (candidatePassword, cb) {
   });
 };
 
+/**
+ * Accessor method to check if login is local, facebook, instagram, etc
+ */
+userSchema.methods.getName = function () {
+  const user = this;
+  if(user.local.name) {
+    return user.local.name;
+  }
+  else if(user.facebook.name) {
+    return user.facebook.name;
+  }
+  else if(user.twitter.name) {
+    return user.twitter.name;
+  }
+  else if(user.instagram.name) {
+    return user.instagram.name;
+  }
+  else if(user.google.name) {
+    return user.google.name;
+  }
+  else {
+    return 'No user found';
+  }
+}
+
+userSchema.methods.getPhoto = function () {
+  const user = this;
+  if(user.local.photo) {
+    return user.local.photo;
+  }
+  else if(user.facebook.photo) {
+    return user.facebook.photo;
+  }
+  else if(user.twitter.photo) {
+    return user.twitter.photo;
+  }
+  else if(user.instagram.photo) {
+    return user.instagram.photo;
+  }
+  else if(user.google.photo) {
+    return user.google.photo;
+  }
+  else {
+    return 'No photo found';
+  }
+}
+
+userSchema.methods.toJSON = function () {
+  var user = this;
+  var userObject = user.toObject();
+
+  return _.pick(userObject, ['_id', 'email', 'photo']);
+}
 // create the model for users
 const User = mongoose.model('User', userSchema);
 
-// Export User for shared access 
+// Export User for shared access
 module.exports = User;

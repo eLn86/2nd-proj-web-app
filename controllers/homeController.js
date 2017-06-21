@@ -7,38 +7,21 @@ let homeController = {
     res.render('/');
   },
   renderSignup: (req,res) => {
-    res.render('signup', {message: req.flash('loginMessage')});
+    res.render('signup');
   },
   signup: (req, res, done) => {
-    if(!req.body.firstName) {
-      req.flash('firstNameError', {
-        type: 'warning',
-        message: "Please fill in your first name"
-      })
-      res.render('signup', {flash: req.flash('firstNameError')});
-    }
-    else if(!req.body.lastName) {
-      req.flash('lastNameError', {
-        type: 'warning',
-        message: "Please fill in your last name"
-      })
-      res.render('signup', {flash: req.flash('lastNameError')});
-    }
+    req.assert('email', 'Email is not valid').isEmail();
+    req.assert('password', 'Password must be at least 8 characters long').len(8);
+    req.assert('firstName', 'First Name should not be empty').notEmpty();
+    req.assert('lastName', 'Last Name should not be empty').notEmpty();
+    req.assert('email', 'Email should not be empty').notEmpty();
+    req.assert('password', 'Password should not be empty').notEmpty();
 
-    else if(!req.body.email) {
-      req.flash('emailError', {
-        type: 'warning',
-        message: "Please fill in your email"
-      })
-      res.render('signup', {flash: req.flash('emailError')});
-    }
+    const errors = req.validationErrors();
 
-    else if(!req.body.password) {
-      req.flash('passwordError', {
-        type: 'warning',
-        message: "Please fill in your password"
-      })
-      res.render('signup', {flash: req.flash('passwordError')});
+    if(errors) {
+      req.flash('errors', errors);
+      return res.redirect('/signup');
     }
     else {
        var userSignUpStrategy = passport.authenticate('local-signup', {
@@ -50,19 +33,15 @@ let homeController = {
     }
   },
   login: (req, res, done) => {
-    if(!req.body.email) {
-      req.flash('emailError', {
-        type: 'warning',
-        message: "Please fill in your email"
-      })
-    res.render('/', {flash: req.flash('emailError')});
-    }
-    else if(!req.body.password) {
-      req.flash('passwordError', {
-        type: 'warning',
-        message: "Please fill in your password"
-      })
-      res.render('/', {flash: req.flash('passwordError')});
+    req.assert('email', 'Email is not valid').isEmail();
+    req.assert('password', 'Password should not be empty').notEmpty();
+    req.assert('email', 'Password should not be empty').notEmpty();
+
+    const errors = req.validationErrors();
+
+    if(errors) {
+      req.flash('errors', errors);
+      return res.redirect('/');
     }
     else {
       var userLoginStrategy = passport.authenticate('local-login', {

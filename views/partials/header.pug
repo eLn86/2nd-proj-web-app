@@ -7,7 +7,8 @@ nav.navbar.navbar-inverse
         span.icon-bar
         span.icon-bar
         span.icon-bar
-      img.navbar-brand(src='/images/logo.png')
+      a(href='/secret')
+        img.navbar-brand(src='/images/logo.png')
     // Collect the nav links, forms, and other content for toggling
     .main-navbar
       ul.nav.navbar-nav
@@ -34,12 +35,13 @@ nav.navbar.navbar-inverse
       //-   button.btn.btn-default(type='submit') Submit
       ul.nav.navbar-nav.navbar-right
         li
-          h1=userName
+          h4.welcomeMessage Welcome !{name} !
         li
           a(href='#') Link
+        li
+          img.profile-pic(src=photo)
         li.dropdown
           a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
-            img.profile-pic(src='') 
             span.caret
           ul.dropdown-menu
             li
