@@ -150,6 +150,14 @@ module.exports = function(passport) {
         }
 
         if(user) {
+            user.facebook.email = profile._json.email;
+            user.facebook.name = `${profile.name.givenName} ${profile.name.familyName}`;
+            user.facebook.photo = `https://graph.facebook.com/${profile.id}/picture?type=large`;
+            user.save(function(err){
+              if(err){
+                return res.json('Could not get facebook details because ' + err);
+              }
+            });
             return done(null, user, req.flash('success', {msg:'Logged in successfully'}));
         }
       });
@@ -170,21 +178,29 @@ module.exports = function(passport) {
         }
 
         if(!user){
-          const newUser = new User();
-          newUser.twitter.id = profile.id;
-          newUser.twitter.email = `${profile.username}@twitter.com`;
-          newUser.twitter.token = token;
-          newUser.twitter.name = profile.displayName;
-          newUser.twitter.photo = profile._json.profile_image_url_https;
-          newUser.save(function(err){
-            if(err){
-              console.log(err);
-            }
-            return done(null, newUser, req.flash('success', {msg:'Logged in successfully'}));
-          });
+            const newUser = new User();
+            newUser.twitter.id = profile.id;
+            newUser.twitter.email = `${profile.username}@twitter.com`;
+            newUser.twitter.token = token;
+            newUser.twitter.name = profile.displayName;
+            newUser.twitter.photo = profile._json.profile_image_url_https;
+            newUser.save(function(err){
+              if(err){
+                console.log(err);
+              }
+              return done(null, newUser, req.flash('success', {msg:'Logged in successfully'}));
+            });
         }
 
         if(user) {
+            user.twitter.email = `${profile.username}@twitter.com`;
+            user.twitter.name = profile.displayName;
+            user.twitter.photo = profile._json.profile_image_url_https;
+            user.save(function(err){
+              if(err){
+                return res.json('Could not get twitter details because ' + err);
+              }
+            });
             return done(null, user, req.flash('success', {msg:'Logged in successfully'}));
         }
       });
@@ -220,6 +236,14 @@ module.exports = function(passport) {
           }
 
           if(user) {
+              user.instagram.email = `${profile.username}@instagram.com`;
+              user.instagram.name = profile.displayName;
+              user.instagram.photo = profile._json.data.profile_picture;
+              user.save(function(err){
+                if(err){
+                  return res.json('Could not get instagram details because ' + err);
+                }
+              });
               return done(null, user, req.flash('success', {msg: 'Logged in successfully'}));
           }
         });
@@ -256,6 +280,14 @@ module.exports = function(passport) {
             }
 
             if(user) {
+                user.google.email = profile.emails;
+                user.instagram.name = profile.displayName;
+                user.instagram.photo = profile._json.image.url;
+                user.save(function(err){
+                  if(err){
+                    return res.json('Could not get google details because ' + err);
+                  }
+                });
                 return done(null, user, req.flash('success', {msg:'Logged in successfully'}));
             }
           });

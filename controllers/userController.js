@@ -29,10 +29,16 @@ let userController = {
     if(userIdentity == 'local') {
       var userName = req.user.getName();
       var userEmail = req.user.getEmail();
+      var userPhoto = req.user.getPhoto();
+      if(req.user.local.photo) {
+        userPhoto = '../' + userPhoto;
+        console.log(userPhoto);
+      }
       res.render('user/updateProfile', {
         title: 'Update Profile',
         name: userName,
-        email: userEmail
+        email: userEmail,
+        photo: userPhoto
       });
     }
     else {
@@ -46,6 +52,10 @@ let userController = {
     }
     var userName = req.user.getName();
     var userPhoto = req.user.getPhoto();
+    if(req.user.local.photo) {
+      userPhoto = '../' + userPhoto;
+      console.log(userPhoto);
+    }
       res.render('user/tracks', {
         title: 'Tracks',
         name: userName,
