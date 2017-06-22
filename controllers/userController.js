@@ -32,7 +32,6 @@ let userController = {
       var userPhoto = req.user.getPhoto();
       if(req.user.local.photo) {
         userPhoto = '../' + userPhoto;
-        console.log(userPhoto);
       }
       res.render('user/updateProfile', {
         title: 'Update Profile',
@@ -84,6 +83,7 @@ let userController = {
         case 'essentials':
         if(oneUser.tracks[0] === 0) {
           oneUser.tracks.set(0,1);
+          
           oneUser.save((err, user) => {
             if (err) {
               return res.json({message: 'could not save user because: ' + err})
@@ -101,6 +101,8 @@ let userController = {
         case 'emergency':
         if(oneUser.tracks[1] === 0) {
           oneUser.tracks.set(1,1);
+          oneUser.emergencyTrackProgress.nodeNumber = 0;
+          oneUser.emergencyTrackProgress.wrongCount = 0;
           oneUser.save((err, user) => {
             if (err) {
               return res.json({message: 'could not save user because: ' + err})
@@ -118,6 +120,8 @@ let userController = {
         case 'neuro':
         if(oneUser.tracks[2] === 0) {
           oneUser.tracks.set(2,1);
+          oneUser.neuroTrackProgress.nodeNumber = 0;
+          oneUser.neuroTrackProgress.wrongCount = 0;
           oneUser.save((err, user) => {
             if (err) {
               return res.json({message: 'could not save user because: ' + err})

@@ -40,7 +40,7 @@ module.exports = function(passport) {
               return done(err);
             }
             if(!user){
-              return done(null,false, req.flash('warning', {msg:'Sorry, there is no one by that email'}));
+              return done(null,false, req.flash('errors', {msg:'Sorry, there is no one by that email'}));
             }
 
             user.validPassword(password, function(err, isMatch){
@@ -49,7 +49,7 @@ module.exports = function(passport) {
                 return done(null, user, req.flash('success', {msg:'Logged in successfully'}));
               }
 
-              return done(null,false, req.flash('warning', {msg:'Sorry, you have keyed in a wrong password'}));
+              return done(null,false, req.flash('errors', {msg:'Sorry, you have keyed in a wrong password'}));
             })
           });
         });
@@ -64,12 +64,12 @@ module.exports = function(passport) {
       function(req, email, password, done){    // function is run because of passReqToCallback:true
           // Check that the email is in the right format
           if( !validator.isEmail(email) ){
-            return done(null, false, req.flash('warning',{msg:'That is not a valid email address'}));
+            return done(null, false, req.flash('errors',{msg:'That is not a valid email address'}));
           }
 
           // Check that the password is at least 8 chars
           if( password.length < 8 ){
-            return done(null, false, req.flash('warning',{msg:'Password needs to be at least 8 chars long'}));
+            return done(null, false, req.flash('errors',{msg:'Password needs to be at least 8 chars long'}));
           }
 
           // Asynchronous function to check if email already exists in DB, if not, create and log in new user
@@ -79,7 +79,7 @@ module.exports = function(passport) {
                 return done(err);
               }
               if(user){
-                return done(null, false, req.flash('warning',{msg:'That email is already in use'}));
+                return done(null, false, req.flash('errors',{msg:'That email is already in use'}));
               }else{
 
                 // var essentialsTrack = new Track();
@@ -102,6 +102,12 @@ module.exports = function(passport) {
                 newUser.local.password = password;
                 newUser.local.photo = '/images/default-photo.gif';
                 newUser.tracks = [0,0,0];
+                newUser.essentialTrackProgress.trackStats = [0,0];
+                newUser.emergencyTrackProgress.trackStats = [0,0];
+                newUser.neuroTrackProgress.trackStats = [0,0];
+                // newUser.essentialTrackProgress.nodeNumber = 0;
+                // newUser.essentialTrackProgress.wrongCount = 0;
+                // console.log(newUser);
                 // Save user in database
                 newUser.save(function(err){
                   if(err){

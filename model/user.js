@@ -39,7 +39,19 @@ var userSchema = mongoose.Schema({
         name         : String,
         photo        : String
     },
-    tracks           : []
+    tracks           : [],
+    essentialTrackProgress: {
+            nodeNumber: Number,
+            trackStats: []
+    },
+    emergencyTrackProgress: {
+            nodeNumber: Number,
+            trackStats: []
+    },
+    neuroTrackProgress: {
+            nodeNumber: Number,
+            trackStats: []
+    }
 });
 
 

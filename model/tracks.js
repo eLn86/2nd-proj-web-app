@@ -8,7 +8,6 @@ var tracksSchema = mongoose.Schema({
       id: String,
       name: String,
       overView: String,
-      price: Number,
       nodes: [nodes.schema]
     }
 
@@ -17,5 +16,5 @@ var tracksSchema = mongoose.Schema({
 // create the model for tracks
 const Track = mongoose.model('Tracks', tracksSchema);
 
-// Export Tracks for shared access 
+// Export Tracks for shared access
 module.exports = Track;
