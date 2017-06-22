@@ -11,6 +11,8 @@ var session = require('express-session');
 var expressValidator = require('express-validator');
 var lessMiddleware = require('less-middleware');
 var MongoStore = require('connect-mongo')(session);
+var methodOverride = require('method-override');
+// var cloudinary = require('cloudinary');
 var index = require('./routes/index');
 var users = require('./routes/users');
 
@@ -52,6 +54,9 @@ require('./config/passport')(passport);
 
 // Flash
 app.use(flash());
+
+// Method Override for http methods (allow PUT)
+app.use(methodOverride('_method'));
 
 // View Engine
 app.set('port', process.env.PORT || 3000);

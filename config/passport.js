@@ -243,7 +243,7 @@ module.exports = function(passport) {
             if(!user){
               const newUser = new User();
               newUser.google.id = profile.id;
-              newUser.google.email = profile.email;
+              newUser.google.email = profile.emails;
               newUser.google.token = accessToken;
               newUser.google.name = profile.displayName;
               newUser.google.photo = profile._json.image.url;

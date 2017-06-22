@@ -118,6 +118,51 @@ userSchema.methods.getPhoto = function () {
   }
 }
 
+userSchema.methods.getEmail = function () {
+  const user = this;
+  if(user.local.email) {
+    return user.local.email;
+  }
+  else if(user.facebook.email) {
+    return user.facebook.email;
+  }
+  else if(user.twitter.email) {
+    return user.twitter.email;
+  }
+  else if(user.instagram.email) {
+    return user.instagram.email;
+  }
+  else if(user.google.email) {
+    return user.google.email;
+  }
+  else {
+    return 'Your email is not registered, replace this text and click submit to update your email';
+  }
+}
+
+userSchema.methods.checkUserIdentity = function () {
+  const user = this;
+  if(user.local.email) {
+    return 'local';
+  }
+  else if(user.facebook.id) {
+    return 'facebook';
+  }
+  else if(user.twitter.id) {
+    return 'twitter';
+  }
+  else if(user.instagram.id) {
+    return 'instagram';
+  }
+  else if(user.google.id) {
+    return 'google';
+  }
+  else {
+    return 'Your email is not registered, replace this text and click submit to update your email';
+  }
+}
+
+
 userSchema.methods.toJSON = function () {
   var user = this;
   var userObject = user.toObject();
