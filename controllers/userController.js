@@ -1,4 +1,4 @@
-let User = require('../model/user');
+const User = require('../model/user');
 const fs = require('fs-extra');
 const passport = require('passport');
 const path = require('path');
@@ -54,7 +54,6 @@ let userController = {
     var userPhoto = req.user.getPhoto();
     if(req.user.local.photo) {
       userPhoto = '../' + userPhoto;
-      console.log(userPhoto);
     }
       res.render('user/tracks', {
         title: 'Tracks',
@@ -74,24 +73,70 @@ let userController = {
         req.flash('success', {msg: 'Profile has been updated!'});
         res.redirect('/secret');
       })
-    }
+    })
+  },
+  enrolTrack: (req,res) => {
+    // console.log(req.body.essential);
+    User.findById({ _id: req.user.id}, (err, oneUser) => {
+      if(err) return res.json({message: 'could not find user by id because: ' + err})
 
-)}
+      switch(req.body.track) {
+        case 'essentials':
+        if(oneUser.tracks[0] === 0) {
+          oneUser.tracks.set(0,1);
+          oneUser.save((err, user) => {
+            if (err) {
+              return res.json({message: 'could not save user because: ' + err})
+            }
+            req.flash('success', {msg: 'You have successfully enrolled the Chest X-Ray Essentials track'});
+            res.redirect('/secret');
+          })
+        }
+        else {
+          req.flash('errors', {msg: 'You are already enrolled in the Chest X-Ray Essentials track' });
+          res.redirect('/secret/tracks');
+        }
+        break;
 
+        case 'emergency':
+        if(oneUser.tracks[1] === 0) {
+          oneUser.tracks.set(1,1);
+          oneUser.save((err, user) => {
+            if (err) {
+              return res.json({message: 'could not save user because: ' + err})
+            }
+            req.flash('success', {msg: 'You have successfully enrolled the Emergency CT track'});
+            res.redirect('/secret');
+          })
+        }
+        else {
+          req.flash('errors', {msg: 'You are already enrolled in the Emergency CT track' });
+          res.redirect('/secret/tracks');
+        }
+        break;
 
+        case 'neuro':
+        if(oneUser.tracks[2] === 0) {
+          oneUser.tracks.set(2,1);
+          oneUser.save((err, user) => {
+            if (err) {
+              return res.json({message: 'could not save user because: ' + err})
+            }
+            req.flash('success', {msg: 'You have successfully enrolled the Neuro MRI Essentials track'});
+            res.redirect('/secret');
+          })
+        }
+        else {
+          req.flash('errors', {msg: 'You are already enrolled in the Neuro MRI Essentials track' });
+          res.redirect('/secret/tracks');
+        }
+        break;
+        default:
+        break;
+      }
 
-    // cloudinary.uploader.upload(req.file.path, function (result) {
-    //   User.findById(req.user.id, function(err, user) {
-    //     if(err) throw err
-    //     user.local.name = req.body.name;
-    //     user.local.email = req.body.email;
-    //     user.local.photo = result.secure_url;
-    //     user.save(function (err, saveUser) {
-    //       req.flash('success', {msg: 'Profile has been updated!'});
-    //       res.redirect('/secret');
-    //     });
-    //   });
-    // });
+    })
+  }
 };
 
 module.exports = userController;

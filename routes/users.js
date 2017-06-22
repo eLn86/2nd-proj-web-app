@@ -15,6 +15,6 @@ router.put('/profile', upload.single('photo'), userController.updateProfile);  /
 
 // Tracks
 router.get('/tracks', userController.renderTracks);  // /secret/tracks
-//router.put('/tracks', userController.updateTracks);  // /secret/tracks
+router.put('/tracks', userController.enrolTrack);  // /secret/tracks
 
 module.exports = router;

@@ -41,7 +41,9 @@ block content
                       span
                       h5 Time Required
             .panel-footer
-              a.btn.btn-lg.btn-block.btn-danger(href='#') Enrol
+              form.form-horizontal(action='/secret/tracks?_method=PUT', method='POST')
+                input.hidden(type='text', name='track', value='essentials')
+                button#essentials.btn.btn-lg.btn-block.btn-danger(type='submit') Enrol
         .col-xs-6.col-sm-6.col-md-4.col-lg-4
           // Emergency CT
           .panel.price.panel-blue
@@ -78,7 +80,9 @@ block content
                       span
                       h5 Time Required
             .panel-footer
-              a.btn.btn-lg.btn-block.btn-info(href='#') Enrol
+              form.form-horizontal(action='/secret/tracks?_method=PUT', method='POST')
+                input.hidden(type='text', name='track', value='emergency')
+                button#emergency.btn.btn-lg.btn-block.btn-info(type='submit') Enrol
         .col-xs-6.col-sm-6.col-md-4.col-lg-4
           // Neuro MRI Essentials
           .panel.price.panel-green
@@ -115,4 +119,6 @@ block content
                       span
                       h5 Time Required
             .panel-footer
-              a.btn.btn-lg.btn-block.btn-success(href='#') Enrol
+              form.form-horizontal(action='/secret/tracks?_method=PUT', method='POST')
+                input.hidden(type='text', name='track', value='neuro')
+                button#neuro.btn.btn-lg.btn-block.btn-success(type='submit') Enrol

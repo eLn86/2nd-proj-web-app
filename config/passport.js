@@ -100,7 +100,7 @@ module.exports = function(passport) {
                 newUser.local.name = req.body.firstName + ' ' + req.body.lastName;
                 newUser.local.email = email;
                 newUser.local.password = password;
-                newUser.local.photo = '../public/images/default-photo.gif';
+                newUser.local.photo = '/images/default-photo.gif';
                 newUser.tracks = [0,0,0];
                 // Save user in database
                 newUser.save(function(err){
