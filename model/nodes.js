@@ -16,6 +16,11 @@ var nodesSchema = mongoose.Schema({
 
 });
 
+nodesSchema.methods.getquestions = function () {
+  const node = this;
+  return node.question;
+}
+
 // create the model for nodes
 const TrackNodes = mongoose.model('nodes', nodesSchema);
 
