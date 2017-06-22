@@ -14,7 +14,8 @@ let userController = {
       res.render('secret', {
         title: 'Welcome to Radiologium',
         name: userName,
-        photo: userPhoto
+        photo: userPhoto,
+        user: req.user
       });
   },
   renderUpdateProfile: (req,res) => {
@@ -38,6 +39,19 @@ let userController = {
     req.flash('errors', {msg: 'Please update your profile in your social media account'});
     return res.redirect('/secret');
     }
+  },
+  renderTracks: (req,res) => {
+    if(!req.user) {
+      return res.redirect('/');
+    }
+    var userName = req.user.getName();
+    var userPhoto = req.user.getPhoto();
+      res.render('user/tracks', {
+        title: 'Tracks',
+        name: userName,
+        photo: userPhoto,
+        user: req.user
+      });
   },
   updateProfile: (req,res) => {
     User.findById({ _id: req.user.id }, (err, oneUser) => {
