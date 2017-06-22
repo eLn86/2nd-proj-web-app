@@ -15,6 +15,7 @@ var methodOverride = require('method-override');
 // var cloudinary = require('cloudinary');
 var index = require('./routes/index');
 var users = require('./routes/users');
+var lessons = require('./routes/lessons');
 
 
 //lets require/import the mongodb native drivers.
@@ -69,7 +70,7 @@ app.get('/', function(req, res) {
 
 app.use('/', index);
 app.use('/secret', users);
-app.use('/secret/tracks', tracks);
+app.use('/secret/lessons', lessons);
 
 // listen
 const port = 3000;

@@ -3,8 +3,9 @@ const router = express.Router();
 const homeController = require('../controllers/homeController');
 const passport = require('passport');
 
-router.get('/', homeController.renderIndex);
-router.post('/', homeController.login);
+// Local Login
+router.get('/', homeController.renderIndex);  //   /
+router.post('/', homeController.login);  //   /
 
 // Facebook Login, get scope from facebook user
 router.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email', 'public_profile'] }));
@@ -30,8 +31,8 @@ router.get('/auth/google/callback', passport.authenticate('google', { failureRed
           res.redirect(req.session.returnTo || '/secret');
         });
 
-router.get('/signup', homeController.renderSignup);
-router.post('/signup', homeController.signup);
+router.get('/signup', homeController.renderSignup);   //  /signup
+router.post('/signup', homeController.signup);  //  /signup
 
 module.exports = router;
 

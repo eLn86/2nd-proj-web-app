@@ -12,10 +12,7 @@ let userController = {
     var enrolledTracks = req.user.getTracks();
     var userName = req.user.getName();
     var userPhoto = req.user.getPhoto();
-
-
-
-    console.log(enrolledTracks);
+    
       res.render('secret', {
         title: 'Welcome to Radiologium',
         name: userName,
