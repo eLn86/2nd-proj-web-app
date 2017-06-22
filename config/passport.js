@@ -11,7 +11,7 @@ var validator = require('validator');
 // Load user model
 var User = require('../model/user');
 var Track = require('../model/tracks');
-var trackNode = require('../model/nodes');
+var Nodes = require('../model/nodes');
 
 module.exports = function(passport) {
 
@@ -102,13 +102,19 @@ module.exports = function(passport) {
                 newUser.local.password = password;
                 newUser.local.photo = '/images/default-photo.gif';
                 newUser.tracks = [0,0,0];
-                newUser.essentialTrackProgress.trackStats = [0,0];
-                newUser.emergencyTrackProgress.trackStats = [0,0];
-                newUser.neuroTrackProgress.trackStats = [0,0];
-                // newUser.essentialTrackProgress.nodeNumber = 0;
-                // newUser.essentialTrackProgress.wrongCount = 0;
-                // console.log(newUser);
-                // Save user in database
+
+                // var newNode = new Nodes();
+                // newNode.nodeNumber = 4;
+                // newNode.topic = 'Essentials';
+                // newNode.xrayImage = '../images/tracks/essentials/node4image.jpg';
+                // newNode.question = 'Intensifier screens reduces patients exposure to x-rays by a factor of';
+                // newNode.options.a = 'A. 500-600';
+                // newNode.options.b = 'B. 1000-2000';
+                // newNode.options.c = 'C. 100-500';
+                // newNode.options.d = 'D. 10-100';
+                // newNode.correctAnswer = newNode.options.c;
+                // newNode.save();
+
                 newUser.save(function(err){
                   if(err){
                     console.log(err);

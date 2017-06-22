@@ -41,16 +41,25 @@ var userSchema = mongoose.Schema({
     },
     tracks           : [],
     essentialTrackProgress: {
-            nodeNumber: Number,
-            trackStats: []
+            currentNodeNumber: {type: Number, default: 0},
+            trackStats: [{
+              node: {type: mongoose.Schema.Types.ObjectId, ref: 'nodes'},
+              wrongCount: {type: Number, default: 0}
+            }]
     },
     emergencyTrackProgress: {
-            nodeNumber: Number,
-            trackStats: []
+            currentNodeNumber: {type: Number, default: 0},
+            trackStats: [{
+              node: {type: mongoose.Schema.Types.ObjectId, ref: 'nodes'},
+              wrongCount: {type: Number, default: 0}
+            }]
     },
     neuroTrackProgress: {
-            nodeNumber: Number,
-            trackStats: []
+            currentNodeNumber: {type: Number, default: 0},
+            trackStats: [{
+              node: {type: mongoose.Schema.Types.ObjectId, ref: 'nodes'},
+              wrongCount: {type: Number, default: 0}
+            }]
     }
 });
 
@@ -173,6 +182,28 @@ userSchema.methods.checkUserIdentity = function () {
   }
 }
 
+userSchema.methods.getTracks = function () {
+  const user = this;
+  var nameArray = [];
+  if(user.tracks[0] === 0 && user.tracks[1] === 0 && user.tracks[2] === 0) {
+    return 'not enrolled';
+  }
+  else {
+      if(user.tracks[0] === 1) {
+        user.tracks[0] = 'Chest X-Ray Essentials Track';
+      }
+      if(user.tracks[1] === 1) {
+        user.tracks[1] = 'Emergency CT Track';
+      }
+      if(user.tracks[2] === 1) {
+        user.tracks[2] = 'Neuro MRI Essentials Track';
+      }
+      var filteredArray = user.tracks.filter(function(track) {
+        return track !== 0;
+      })
+    return filteredArray;
+  }
+}
 
 userSchema.methods.toJSON = function () {
   var user = this;

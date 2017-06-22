@@ -69,6 +69,7 @@ app.get('/', function(req, res) {
 
 app.use('/', index);
 app.use('/secret', users);
+app.use('/secret/tracks', tracks);
 
 // listen
 const port = 3000;

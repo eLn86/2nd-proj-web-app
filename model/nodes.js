@@ -2,21 +2,22 @@ var mongoose = require('mongoose');
 
 var nodesSchema = mongoose.Schema({
 
-    node: {
-      totalNo: Number,
-      no: Number,
+      nodeNumber: Number,
       topic: String,
       xrayImage: String,
       question: String,
-      answerOptions: {},
-      correctAnswer: {},
-      explanation: String
-    }
+      options: {
+        a: String,
+        b: String,
+        c: String,
+        d: String
+      },
+      correctAnswer: String
 
 });
 
 // create the model for nodes
 const TrackNodes = mongoose.model('nodes', nodesSchema);
 
-// Export Nodes for shared access 
+// Export Nodes for shared access
 module.exports = TrackNodes;
