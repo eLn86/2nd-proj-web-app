@@ -101,7 +101,7 @@ module.exports = function(passport) {
                 newUser.local.email = email;
                 newUser.local.password = password;
                 newUser.local.photo = '../public/images/default-photo.gif';
-
+                newUser.tracks = [0,0,0];
                 // Save user in database
                 newUser.save(function(err){
                   if(err){
@@ -139,7 +139,7 @@ module.exports = function(passport) {
           newUser.facebook.email = profile._json.email;
           newUser.facebook.name = `${profile.name.givenName} ${profile.name.familyName}`;
           newUser.facebook.photo = `https://graph.facebook.com/${profile.id}/picture?type=large`;
-
+          newUser.tracks = [0,0,0];
           // save into database
           newUser.save(function(err){
             if(err){
@@ -184,6 +184,7 @@ module.exports = function(passport) {
             newUser.twitter.token = token;
             newUser.twitter.name = profile.displayName;
             newUser.twitter.photo = profile._json.profile_image_url_https;
+            newUser.tracks = [0,0,0];
             newUser.save(function(err){
               if(err){
                 console.log(err);
@@ -209,8 +210,8 @@ module.exports = function(passport) {
 
       // Passport Instagram Login
       passport.use(new instagramStrategy({
-      clientID: '2c073b80f10b434189a155512d661630',
-      clientSecret: 'fc5c82287f3243bcafefe6e67530610a',
+      clientID: '58edaefbfeb949ba9135df2b3072d0ef',
+      clientSecret: 'c43d734ddf334bcda32a5d592e843993',
       callbackURL: "http://127.0.0.1:3000/auth/instagram/callback",
       passReqToCallback: true
       },
@@ -227,6 +228,7 @@ module.exports = function(passport) {
             newUser.instagram.token = accessToken;
             newUser.instagram.name = profile.displayName;
             newUser.instagram.photo = profile._json.data.profile_picture;
+            newUser.tracks = [0,0,0];
             newUser.save(function(err){
               if(err){
                 console.log(err);
@@ -271,6 +273,7 @@ module.exports = function(passport) {
               newUser.google.token = accessToken;
               newUser.google.name = profile.displayName;
               newUser.google.photo = profile._json.image.url;
+              newUser.tracks = [0,0,0];
               newUser.save(function(err){
                 if(err){
                   console.log(err);
