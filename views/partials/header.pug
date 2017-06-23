@@ -21,7 +21,7 @@ nav.navbar.navbar-inverse
         li.dropdown.reportElement
           a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false' style='color:black')
             | Reports 
-          ul.dropdown-menu
+          ul(style='margin-top:8px').dropdown-menu
             li
               a(href='#') Tracks Covered
             li
@@ -35,14 +35,14 @@ nav.navbar.navbar-inverse
       //-     input.form-control(type='text', placeholder='Search Tracks')
       //-   button.btn.btn-default(type='submit') Submit
       ul.nav.navbar-nav.navbar-right
-        li
+        li(style='margin-top:10px;margin-right:20px')
           h4.welcomeMessage Welcome !{name}
         li
           img.profile-pic(src=photo)
         li.dropdown
           a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
             span.caret
-          ul.dropdown-menu
+          ul(style='margin-top:25px;').dropdown-menu
             li
               a(href='/secret/profile') Update Profile
             li
