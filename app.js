@@ -10,9 +10,9 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var expressValidator = require('express-validator');
 var lessMiddleware = require('less-middleware');
-var MongoStore = require('connect-mongo')(session);
 var methodOverride = require('method-override');
-// var cloudinary = require('cloudinary');
+
+// Routers
 var index = require('./routes/index');
 var users = require('./routes/users');
 var lessons = require('./routes/lessons');
@@ -32,7 +32,7 @@ mongoose.connect(process.env.MONGODB_URI, function(err,db) {
   if (err) {
     console.log('Unable to connect to the mongoDB server. Error:', err);
   } else {
-    console.log('Connection established to', localMongoURL);
+    console.log('Connection established to', process.env.MONGODB_URI);
   }
 });
 
