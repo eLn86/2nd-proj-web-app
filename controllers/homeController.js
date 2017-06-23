@@ -33,15 +33,14 @@ let homeController = {
     }
   },
   login: (req, res, done) => {
-    req.assert('email', 'Email is not valid').isEmail();
-    req.assert('password', 'Password should not be empty').notEmpty();
-    req.assert('email', 'Password should not be empty').notEmpty();
+    if(!req.body.email) {
+      req.flash('errors', {msg: 'Please do not leave the email field empty'})
+      res.redirect('/');
+    }
 
-    const errors = req.validationErrors();
-
-    if(errors) {
-      req.flash('errors', errors);
-      return res.redirect('/');
+    else if(!req.body.password) {
+      req.flash('errors', {msg: 'Please do not leave the password field empty'})
+      res.redirect('/');
     }
     else {
       var userLoginStrategy = passport.authenticate('local-login', {

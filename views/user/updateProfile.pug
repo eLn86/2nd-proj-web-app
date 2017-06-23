@@ -22,3 +22,21 @@ block content
       .col-sm-offset-2.col-sm-8
         button#updateSubmit.btn.btn-primary(type='submit')
           | Update Profile
+          button.btn.btn-danger.btn-md(type='button', data-toggle='modal', data-target='#deleteModal')
+            | Delete Account
+          #deleteModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='gridSystemModalLabel')
+           .modal-dialog(role='document')
+             .modal-content
+               .modal-header
+                 button.close(type='button', data-dismiss='modal', aria-label='Close')
+                   span(aria-hidden='true') ×
+                 h4#gridSystemModalLabel.modal-title Modal title
+               .modal-body
+                 | Are you sure that you want to delete your account?
+               .modal-footer
+                 button.btn.btn-default(type='button', data-dismiss='modal') No
+                 a(href='/secret/profile/delete')
+                     button.btn.btn-primary(type='button') Yes
+             // /.modal-content
+           // /.modal-dialog
+        // /.modal

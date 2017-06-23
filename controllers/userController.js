@@ -12,7 +12,7 @@ let userController = {
     var enrolledTracks = req.user.getTracks();
     var userName = req.user.getName();
     var userPhoto = req.user.getPhoto();
-    
+
       res.render('secret', {
         title: 'Welcome to Radiologium',
         name: userName,
@@ -141,6 +141,13 @@ let userController = {
         break;
       }
 
+    })
+  },
+  deleteAccount: (req, res) => {
+    User.findByIdAndRemove(req.user.id, (err, userRemoved) => {
+      if (err) throw err
+      req.flash('errors', {msg: 'Your account has been deleted' });
+      res.redirect('/')
     })
   }
 };
