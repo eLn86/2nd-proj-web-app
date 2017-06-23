@@ -11,7 +11,10 @@ let lessonController = {
     Nodes.find({}, function(err, nodes) {
       var userName = req.user.getName();
       var userPhoto = req.user.getPhoto();
-      var userPhoto = '../../' + userPhoto;
+      if(req.user.local.name) {
+        var userPhoto = '../../' + userPhoto;
+      }
+
       var topicsArray = [];
       var imagesArray = [];
       var nodeNumberArray = [];
@@ -32,7 +35,7 @@ let lessonController = {
       // console.log(imagesArray);
       // console.log(nodeNumberArray);
       // console.log(questionsArray);
-      // console.log(optionsArray);
+      console.log(optionsArray);
       // console.log(correctAnswersArray);
 
       res.render('user/essentialsLesson', {
