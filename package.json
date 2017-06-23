@@ -40,7 +40,6 @@
     "passport-twitter": "^1.0.4",
     "path": "^0.12.7",
     "pug": "^2.0.0-beta11",
-    "serve-favicon": "~2.3.2",
     "validator": "^7.0.0"
   },
   "devDependencies": {

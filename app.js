@@ -28,7 +28,7 @@ const app = express();
 const debug = Debug('2nd-proj-web-app:app');
 
 // Connect with Mongo DB
-mongoose.connect(localMongoURL, function(err,db) {
+mongoose.connect(process.env.MONGODB_URI, function(err,db) {
   if (err) {
     console.log('Unable to connect to the mongoDB server. Error:', err);
   } else {
