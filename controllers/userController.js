@@ -57,11 +57,14 @@ let userController = {
     if(req.user.local.photo) {
       userPhoto = '../' + userPhoto;
     }
+    var enrolledTracks = req.user.getTracks();
+    console.log(enrolledTracks);
       res.render('user/tracks', {
         title: 'Tracks',
         name: userName,
         photo: userPhoto,
-        user: req.user
+        user: req.user,
+        tracks: enrolledTracks
       });
   },
   updateProfile: (req,res) => {

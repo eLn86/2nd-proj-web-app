@@ -82,20 +82,6 @@ module.exports = function(passport) {
                 return done(null, false, req.flash('errors',{msg:'That email is already in use'}));
               }else{
 
-                // var essentialsTrack = new Track();
-                // essentialsTrack.track.id = 1;
-                // essentialsTrack.track.name = 'Chest X-Ray Essentials';
-                // essentialsTrack.track.overView = 'The Chest X-ray Essentials track is a quintessential in-depth review of X-ray radiological anatomy.';
-                // essentialsTrack.track.price = 25;
-                //
-                // // Save track in database
-                // essentialsTrack.save(function(err){
-                //   if(err){
-                //     console.log(err);
-                //   }
-                //   return done(null, essentialsTrack);
-                // });
-
                 var newUser = new User();
                 newUser.local.name = req.body.firstName + ' ' + req.body.lastName;
                 newUser.local.email = email;

@@ -31,13 +31,6 @@ let lessonController = {
         correctAnswersArray.push(nodes[i].correctAnswer);
       }
 
-      // console.log(topicsArray);
-      // console.log(imagesArray);
-      // console.log(nodeNumberArray);
-      // console.log(questionsArray);
-      console.log(optionsArray);
-      // console.log(correctAnswersArray);
-
       res.render('user/essentialsLesson', {
         title: 'Essentials Lesson',
         name: userName,

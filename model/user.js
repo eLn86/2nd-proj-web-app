@@ -186,7 +186,8 @@ userSchema.methods.getTracks = function () {
   const user = this;
   var nameArray = [];
   if(user.tracks[0] === 0 && user.tracks[1] === 0 && user.tracks[2] === 0) {
-    return 'not enrolled';
+    nameArray.push('not enrolled');
+    return nameArray;
   }
   else {
       if(user.tracks[0] === 1) {

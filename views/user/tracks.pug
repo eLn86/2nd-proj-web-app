@@ -3,7 +3,7 @@ extends ../base/layout
 block content
         
     .jumbotron
-      h1.text-center Welcome !{name}!
+      h1.text-center Welcome !{name}! 
       .row
         .col-xs-6.col-sm-6.col-md-4.col-lg-4
           // Chest X Ray Essentials Track
@@ -41,9 +41,17 @@ block content
                       span
                       h5 Time Required
             .panel-footer
-              form.form-horizontal(action='/secret/tracks?_method=PUT', method='POST')
-                input.hidden(type='text', name='track', value='essentials')
-                button#essentials.btn.btn-lg.btn-block.btn-danger(type='submit') Enrol
+              - var filteredArray = [];
+              -  filteredArray = tracks.filter(function(x) {
+              -  return x === 'Chest X-Ray Essentials Track'
+              -  });
+              
+              if filteredArray[0] === 'Chest X-Ray Essentials Track'
+                button#essentials.btn.btn-lg.btn-block.disabled(type='button') Enrolled
+              else
+                form.form-horizontal(action='/secret/tracks?_method=PUT', method='POST')
+                  input.hidden(type='text', name='track', value='essentials')
+                  button#essentials.btn.btn-lg.btn-block.btn-danger(type='submit') Enrol
         .col-xs-6.col-sm-6.col-md-4.col-lg-4
           // Emergency CT
           .panel.price.panel-blue
@@ -80,9 +88,17 @@ block content
                       span
                       h5 Time Required
             .panel-footer
-              form.form-horizontal(action='/secret/tracks?_method=PUT', method='POST')
-                input.hidden(type='text', name='track', value='emergency')
-                button#emergency.btn.btn-lg.btn-block.btn-info(type='submit') Enrol
+              - var filteredArray = [];
+              -  filteredArray = tracks.filter(function(x) {
+              -  return x === 'Emergency CT Track'
+              -  });
+              
+              if filteredArray[0] === 'Emergency CT Track'
+                button#emergency.btn.btn-lg.btn-block.disabled(type='button') Enrolled
+              else
+                form.form-horizontal(action='/secret/tracks?_method=PUT', method='POST')
+                  input.hidden(type='text', name='track', value='emergency')
+                  button#emergency.btn.btn-lg.btn-block.btn-info(type='submit') Enrol
         .col-xs-6.col-sm-6.col-md-4.col-lg-4
           // Neuro MRI Essentials
           .panel.price.panel-green
@@ -119,6 +135,14 @@ block content
                       span
                       h5 Time Required
             .panel-footer
-              form.form-horizontal(action='/secret/tracks?_method=PUT', method='POST')
-                input.hidden(type='text', name='track', value='neuro')
-                button#neuro.btn.btn-lg.btn-block.btn-success(type='submit') Enrol
+                - var filteredArray = [];
+                -  filteredArray = tracks.filter(function(x) {
+                -  return x === 'Neuro MRI Essentials Track'
+                -  });
+                
+                if filteredArray[0] === 'Neuro MRI Essentials Track'
+                  button#neuro.btn.btn-lg.btn-block.disabled(type='button') Enrolled
+                else
+                  form.form-horizontal(action='/secret/tracks?_method=PUT', method='POST')
+                    input.hidden(type='text', name='track', value='neuro')
+                    button#neuro.btn.btn-lg.btn-block.btn-success(type='submit') Enrol

@@ -21,7 +21,7 @@ let homeController = {
 
     if(errors) {
       req.flash('errors', errors);
-      return res.redirect('/signup');
+      res.redirect('/signup');
     }
     else {
        var userSignUpStrategy = passport.authenticate('local-signup', {
