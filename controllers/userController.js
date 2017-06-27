@@ -130,8 +130,6 @@ let userController = {
       req.flash('errors', errors);
       res.redirect('/secret/changePassword');
     }
-    console.log(req.body.newPassword);
-    console.log(req.body.confirmPassword);
     if(req.body.newPassword !== req.body.confirmPassword) {
       req.flash('errors', {msg: 'Passwords do not match'});
       res.redirect('/secret/changePassword');
