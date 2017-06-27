@@ -14,6 +14,10 @@ router.get('/profile', userController.renderUpdateProfile);  // /secret/profile
 router.put('/profile', upload.single('photo'), userController.updateProfile);  // /secret/profile
 router.get('/profile/delete', userController.deleteAccount);  // /secret/profile
 
+// Change password
+router.get('/changePassword', userController.renderChangePassword);  // /secret/changePassword
+router.post('/changePassword', userController.updatePassword);  // /secret/changePassword
+
 // Tracks
 router.get('/tracks', userController.renderTracks);  // /secret/tracks
 router.put('/tracks', userController.enrolTrack);  // /secret/tracks

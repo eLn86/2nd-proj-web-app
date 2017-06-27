@@ -8,19 +8,8 @@ block main
           span.fa.fa-sign-in Signup
     .row
       .col-sm-8.col-sm-offset-2
-        //- -if flash.message
-        //- .alert.alert-danger= flash.message
-        //- 
-        //-  -if(Array.isArray(flash.message)) {
-        //-  ul
-        //-   -flash.message.forEach(function(msg) {
-        //-     li=msg
-        //-   -})
-        //-  -}
-        //-  -else 
-        //-  -flash.message
-
-          // SIGNUP FORM
+        
+        // SIGNUP FORM
         form(action='/signup', method='post')
           .form-group
             label First Name

@@ -49,6 +49,27 @@ let userController = {
     return res.redirect('/secret');
     }
   },
+  renderChangePassword: (req,res) => {
+    var userIdentity = req.user.checkUserIdentity();
+    if(userIdentity == 'local') {
+      var userName = req.user.getName();
+      var userEmail = req.user.getEmail();
+      var userPhoto = req.user.getPhoto();
+      if(req.user.local.photo) {
+        userPhoto = '../' + userPhoto;
+      }
+      res.render('user/changePassword', {
+        title: 'Change Password',
+        name: userName,
+        email: userEmail,
+        photo: userPhoto
+      });
+    }
+    else {
+    req.flash('errors', {msg: 'Please change your password in your social media account'});
+    return res.redirect('/secret');
+    }
+  },
   renderTracks: (req,res) => {
     if(!req.user) {
       return res.redirect('/');
@@ -96,7 +117,37 @@ let userController = {
         })
       })
     }
+  },
+  updatePassword: (req,res) => {
+    req.assert('newPassword', 'New Password field cannot be empty').notEmpty();
+    req.assert('confirmPassword', 'Confirm Password field cannot be empty').notEmpty();
+    req.assert('newPassword', 'New Password must be at least 8 characters long').len(8);
+    req.assert('confirmPassword', 'Confirm Password must be at least 8 characters long').len(8);
 
+    const errors = req.validationErrors();
+
+    if(errors) {
+      req.flash('errors', errors);
+      res.redirect('/secret/changePassword');
+    }
+    console.log(req.body.newPassword);
+    console.log(req.body.confirmPassword);
+    if(req.body.newPassword !== req.body.confirmPassword) {
+      req.flash('errors', {msg: 'Passwords do not match'});
+      res.redirect('/secret/changePassword');
+    }
+
+    else {
+      User.findById({_id: req.user.id}, (err, oneUser) => {
+        if (err) return res.json({message: 'could not find user by id because: ' + err})
+        oneUser.local.password = req.body.newPassword;
+        oneUser.save((err, user) => {
+          if (err) return res.json({message: 'could not save user because: ' + err})
+          req.flash('success', {msg: 'Password changed successfully'});
+          res.redirect('/secret');
+        })
+      })
+    }
   },
   enrolTrack: (req,res) => {
     // console.log(req.body.essential);

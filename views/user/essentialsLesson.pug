@@ -4,7 +4,7 @@ block content
       .row
         .col-xs-6.col-sm-6.col-md-2.col-lg-2
           each val,index in nodeNumber
-            .row#node
+            .row(id="node"+val)
               a(href='#', style='all:unset')
                 .col-xs-12.col-sm-12.col-md-12.col-lg-12(style='background-color: rgb(218, 218, 218);border: 2px solid grey;text-align:center;padding:20px;')
                   p(style='font-family: Verdana') Node !{val} of 4
