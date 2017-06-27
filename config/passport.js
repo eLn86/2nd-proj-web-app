@@ -1,14 +1,14 @@
-// Load passport local
+// Import passport strategies
 var localStrategy = require('passport-local').Strategy;
 var facebookStrategy = require('passport-facebook').Strategy;
 var twitterStrategy = require('passport-twitter').Strategy;
 var instagramStrategy = require('passport-instagram').Strategy;
 var googleStrategy = require('passport-google-oauth20').Strategy;
 
-// Load validator
+// Import validator
 var validator = require('validator');
 
-// Load user model
+// Import models
 var User = require('../model/user');
 var Track = require('../model/tracks');
 var Nodes = require('../model/nodes');

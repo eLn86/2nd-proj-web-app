@@ -17,6 +17,9 @@ router.get('/profile/delete', userController.deleteAccount);  // /secret/profile
 // Tracks
 router.get('/tracks', userController.renderTracks);  // /secret/tracks
 router.put('/tracks', userController.enrolTrack);  // /secret/tracks
+router.get('/tracks/deleteEssentialsTrack', userController.deleteEssentialsTrack);  // /secret/tracks/deleteEssentialsTrack
+router.get('/tracks/deleteEmergencyTrack', userController.deleteEmergencyTrack);  // /secret/tracks/deleteEmergencyTrack
+router.get('/tracks/deleteNeuroTrack', userController.deleteNeuroTrack);  // /secret/tracks/deleteNeuroTrack
 
 
 module.exports = router;

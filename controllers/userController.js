@@ -12,13 +12,14 @@ let userController = {
     var enrolledTracks = req.user.getTracks();
     var userName = req.user.getName();
     var userPhoto = req.user.getPhoto();
-
+    var nodesProgress = req.user.getCurrentNodeNumber();
       res.render('secret', {
         title: 'Welcome to Radiologium',
         name: userName,
         photo: userPhoto,
         user: req.user,
-        tracks: enrolledTracks
+        tracks: enrolledTracks,
+        node: nodesProgress
       });
   },
   renderUpdateProfile: (req,res) => {
@@ -58,7 +59,6 @@ let userController = {
       userPhoto = '../' + userPhoto;
     }
     var enrolledTracks = req.user.getTracks();
-    console.log(enrolledTracks);
       res.render('user/tracks', {
         title: 'Tracks',
         name: userName,
@@ -68,17 +68,35 @@ let userController = {
       });
   },
   updateProfile: (req,res) => {
-    User.findById({ _id: req.user.id }, (err, oneUser) => {
-      if (err) return res.json({message: 'could not find user by id because: ' + err})
-      oneUser.local.name = req.body.name
-      oneUser.local.email = req.body.email
-      oneUser.local.photo = req.file.filename
-      oneUser.save((err, user) => {
-        if (err) return res.json({message: 'could not save user because: ' + err})
-        req.flash('success', {msg: 'Profile has been updated!'});
-        res.redirect('/secret');
+
+    if(req.file === undefined) {
+      User.findById({ _id: req.user.id }, (err, oneUser) => {
+        if (err) return res.json({message: 'could not find user by id because: ' + err})
+
+        oneUser.local.name = req.body.name
+        oneUser.local.email = req.body.email
+        oneUser.save((err, user) => {
+          if (err) return res.json({message: 'could not save user because: ' + err})
+          req.flash('success', {msg: 'Profile has been updated!'});
+          res.redirect('/secret');
+        })
       })
-    })
+    }
+    else {
+      User.findById({ _id: req.user.id }, (err, oneUser) => {
+        if (err) return res.json({message: 'could not find user by id because: ' + err})
+
+        oneUser.local.name = req.body.name
+        oneUser.local.email = req.body.email
+        oneUser.local.photo = req.file.filename
+        oneUser.save((err, user) => {
+          if (err) return res.json({message: 'could not save user because: ' + err})
+          req.flash('success', {msg: 'Profile has been updated!'});
+          res.redirect('/secret');
+        })
+      })
+    }
+
   },
   enrolTrack: (req,res) => {
     // console.log(req.body.essential);
@@ -151,6 +169,48 @@ let userController = {
       if (err) throw err
       req.flash('errors', {msg: 'Your account has been deleted' });
       res.redirect('/')
+    })
+  },
+  deleteEssentialsTrack: (req, res) => {
+    // console.log(req.user.track);
+    User.findById({ _id: req.user.id}, (err, oneUser) => {
+      if(err) return res.json({message: 'could not find user by id because: ' + err})
+      oneUser.tracks.set(0,0);
+      oneUser.save((err, user) => {
+        if (err) {
+          return res.json({message: 'could not save user because: ' + err})
+        }
+        req.flash('errors', {msg: 'Your have disenrolled from the Chest X-Ray Essentials Track' });
+        res.redirect('/secret')
+      });
+    })
+  },
+  deleteEmergencyTrack: (req, res) => {
+    // console.log(req.user.track);
+    User.findById({ _id: req.user.id}, (err, oneUser) => {
+      if(err) return res.json({message: 'could not find user by id because: ' + err})
+      oneUser.tracks.set(1,0);
+      oneUser.save((err, user) => {
+        if (err) {
+          return res.json({message: 'could not save user because: ' + err})
+        }
+        req.flash('errors', {msg: 'Your have disenrolled from the Emergency CT Track' });
+        res.redirect('/secret')
+      });
+    })
+  },
+  deleteNeuroTrack: (req, res) => {
+    // console.log(req.user.track);
+    User.findById({ _id: req.user.id}, (err, oneUser) => {
+      if(err) return res.json({message: 'could not find user by id because: ' + err})
+      oneUser.tracks.set(2,0);
+      oneUser.save((err, user) => {
+        if (err) {
+          return res.json({message: 'could not save user because: ' + err})
+        }
+        req.flash('errors', {msg: 'Your have disenrolled from the Neuro MRI Essentials Track' });
+        res.redirect('/secret')
+      });
     })
   }
 };

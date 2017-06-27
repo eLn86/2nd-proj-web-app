@@ -206,6 +206,15 @@ userSchema.methods.getTracks = function () {
   }
 }
 
+userSchema.methods.getCurrentNodeNumber = function () {
+  const user = this;
+  var nodesProgressArray = [0,0,0];
+  nodesProgressArray[0] = user.essentialTrackProgress.currentNodeNumber;
+  nodesProgressArray[1] = user.emergencyTrackProgress.currentNodeNumber;
+  nodesProgressArray[2] = user.neuroTrackProgress.currentNodeNumber;
+  return nodesProgressArray;
+}
+
 userSchema.methods.toJSON = function () {
   var user = this;
   var userObject = user.toObject();
