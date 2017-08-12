@@ -1,6 +1,6 @@
 require('dotenv').config({silent: true});
 var express = require('express');
-var Debug = require('debug');
+// var Debug = require('debug');
 var path = require('path');
 var mongoose = require('mongoose');
 var passport = require('passport');
@@ -25,7 +25,7 @@ var localMongoURL = 'mongodb://localhost/radiologium';
 
 // Init app
 const app = express();
-const debug = Debug('2nd-proj-web-app:app');
+// const debug = Debug('2nd-proj-web-app:app');
 
 // Connect with Mongo DB
 mongoose.connect(localMongoURL, function(err,db) {
