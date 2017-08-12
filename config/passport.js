@@ -117,7 +117,7 @@ module.exports = function(passport) {
     passport.use(new facebookStrategy({
     clientID: '1900129696892874',
     clientSecret: '91612faf0b9471d576917d2a6d74579a',
-    callbackURL: "http://ec2-52-77-223-15.ap-southeast-1.compute.amazonaws.com/auth/facebook/callback",
+    callbackURL: "http://ec2-52-77-223-15.ap-southeast-1.compute.amazonaws.com:3000/auth/facebook/callback",
     profileFields: ['name', 'email', 'link', 'locale', 'timezone', 'gender'],
     passReqToCallback: true
   },
