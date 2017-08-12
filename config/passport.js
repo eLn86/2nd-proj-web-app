@@ -117,7 +117,7 @@ module.exports = function(passport) {
     passport.use(new facebookStrategy({
     clientID: '1900129696892874',
     clientSecret: '91612faf0b9471d576917d2a6d74579a',
-    callbackURL: 'http://localhost:3000/auth/facebook/callback',
+    callbackURL: "http://ec2-52-77-223-15.ap-southeast-1.compute.amazonaws.com/auth/facebook/callback",
     profileFields: ['name', 'email', 'link', 'locale', 'timezone', 'gender'],
     passReqToCallback: true
   },
@@ -166,7 +166,7 @@ module.exports = function(passport) {
     passport.use(new twitterStrategy({
     consumerKey: 'RQXS1CkbL6eQ04iJYLVnw2EJf',
     consumerSecret: 'kgwYOYolYd0sF7VqHUotVFcqbJlMFaRhiuaYVVgcPRvycO5IFp',
-    callbackURL: "http://localhost:3000/auth/twitter/callback",
+    callbackURL: "http://ec2-52-77-223-15.ap-southeast-1.compute.amazonaws.com/auth/twitter/callback",
     passReqToCallback: true
   },
     function(req, token, tokenSecret, profile, done){
@@ -210,7 +210,7 @@ module.exports = function(passport) {
       passport.use(new instagramStrategy({
       clientID: '58edaefbfeb949ba9135df2b3072d0ef',
       clientSecret: 'c43d734ddf334bcda32a5d592e843993',
-      callbackURL: "http://127.0.0.1:3000/auth/instagram/callback",
+      callbackURL: "http://ec2-52-77-223-15.ap-southeast-1.compute.amazonaws.com/auth/instagram/callback",
       passReqToCallback: true
       },
       function(req, accessToken, refreshToken, profile, done) {
@@ -255,7 +255,7 @@ module.exports = function(passport) {
         passport.use(new googleStrategy({
         clientID: '425387065267-sg9kbsssmlihs1lekjscpc21p6gcf866.apps.googleusercontent.com',
         clientSecret: 'o8ByebzHC4LVVrJL1MdYwn4z',
-        callbackURL: "http://localhost:3000/auth/google/callback",
+        callbackURL: "http://ec2-52-77-223-15.ap-southeast-1.compute.amazonaws.com/auth/google/callback",
         passReqToCallback: true
         },
         function(req, accessToken, refreshToken, profile, done) {
