@@ -27,6 +27,11 @@ var localMongoURL = 'mongodb://localhost/radiologium';
 const app = express();
 // const debug = Debug('2nd-proj-web-app:app');
 
+/**
+ * Create HTTP server.
+ */
+const server = require('http').Server(app);
+
 // Connect with Mongo DB
 mongoose.connect(localMongoURL, function(err,db) {
   if (err) {
