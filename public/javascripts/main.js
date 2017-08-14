@@ -1,6 +1,6 @@
-// (function() {
-//   document.addEventListener('click', function(event) {
-//     console.log(event.target);
-//   })
-//
-// }());
+(function() {
+  document.addEventListener('click', function(event) {
+    console.log(event.target);
+  })
+
+}());
