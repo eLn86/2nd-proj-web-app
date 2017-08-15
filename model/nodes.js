@@ -12,8 +12,8 @@ var nodesSchema = mongoose.Schema({
         c: String,
         d: String
       },
-      correctAnswer: String
-
+      correctAnswer: String,
+      explanation: String
 });
 
 nodesSchema.methods.getquestions = function () {

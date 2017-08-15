@@ -7,7 +7,10 @@ block content
             .row(id="node"+val)
               a(href='#', style='all:unset')
                 .col-xs-12.col-sm-12.col-md-12.col-lg-12(style='background-color: rgb(218, 218, 218);border: 2px solid grey;text-align:center;padding:20px;')
-                  p(style='font-family: Verdana') Node !{val} of 4
+                  if val === currentNode
+                    p(style='font-family: Verdana;color: blue') Node !{currentNode} of 5
+                  else
+                    p(style='font-family: Verdana') Node !{val} of 5
                   p(style='font-family: Verdana; font-weight: bold') !{topic[index]}
 
 
@@ -18,25 +21,26 @@ block content
                h2 Topic
            .row
              .col-xs-5.col-sm-5.col-md-5.col-lg-5
-               img(src='/images/tracks/essentials/node1image.jpg', style='width:auto;height:400px')
+               img(src=images[currentNode-1], style='width:auto;height:400px')
              .col-xs-6.col-sm-6.col-md-6.col-lg-6
                .row
                  .col-xs-12.col-sm-12.col-md-12.col-lg-12
-                   h4 Question
+                   h4 Question !{currentNode}
                .row
                  .col-xs-12.col-sm-12.col-md-12.col-lg-12
-                   h3(style='font-family: Verdana; color: grey')=question[0]
+                   h3(style='font-family: Verdana; color: grey')=question[currentNode-1]
                .row
                  .col-xs-12.col-sm-12.col-md-12.col-lg-12
                    ol(style='list-style-type:none')
                      li
-                       a#1a(href='#') !{options[0].a}
+                       a#1a(href='#') !{options[currentNode-1].a}
                      li
-                       a#1b(href='#') !{options[0].b}
+                       a#1b(href='#') !{options[currentNode-1].b}
                      li
-                       a#1c(href='#') !{options[0].c}
+                       a#1c(href='#') !{options[currentNode-1].c}
                      li
-                       a#1d(href='#') !{options[0].d}
+                       a#1d(href='#') !{options[currentNode-1].d}
                      button#correct.btn.btn-success(type='button', style='margin-top:50px; display:none') Correct! Move on to the next question by clicking here!
                      #wrongAnswer(style='width:300px; height:40px; border: 1px solid red; margin-top:50px; text-align:center;display:none')
                        h4(style='color:red;font-weight:bolder') Incorrect! Please try again!
+                     #correctAnswer()
